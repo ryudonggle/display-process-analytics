@@ -1,0 +1,499 @@
+{
+ "base_rate": 0.0471,
+ "months": [
+  "2023-12",
+  "2024-01",
+  "2024-02",
+  "2024-03",
+  "2024-04"
+ ],
+ "n_products": 16029,
+ "n_defects": 755,
+ "table": {
+  "원본 변수 모델": {
+   "0.5": {
+    "TP": 7,
+    "inspected": 80,
+    "precision": 0.0875
+   },
+   "1.0": {
+    "TP": 12,
+    "inspected": 160,
+    "precision": 0.075
+   },
+   "1.5": {
+    "TP": 22,
+    "inspected": 240,
+    "precision": 0.0917
+   },
+   "2.0": {
+    "TP": 27,
+    "inspected": 321,
+    "precision": 0.0841
+   },
+   "2.5": {
+    "TP": 30,
+    "inspected": 401,
+    "precision": 0.0748
+   },
+   "3.0": {
+    "TP": 37,
+    "inspected": 480,
+    "precision": 0.0771
+   },
+   "3.5": {
+    "TP": 47,
+    "inspected": 561,
+    "precision": 0.0838
+   },
+   "4.0": {
+    "TP": 51,
+    "inspected": 641,
+    "precision": 0.0796
+   },
+   "4.5": {
+    "TP": 52,
+    "inspected": 721,
+    "precision": 0.0721
+   },
+   "5.0": {
+    "TP": 58,
+    "inspected": 801,
+    "precision": 0.0724
+   },
+   "5.5": {
+    "TP": 60,
+    "inspected": 882,
+    "precision": 0.068
+   },
+   "6.0": {
+    "TP": 65,
+    "inspected": 962,
+    "precision": 0.0676
+   },
+   "6.5": {
+    "TP": 72,
+    "inspected": 1042,
+    "precision": 0.0691
+   },
+   "7.0": {
+    "TP": 77,
+    "inspected": 1122,
+    "precision": 0.0686
+   },
+   "7.5": {
+    "TP": 80,
+    "inspected": 1202,
+    "precision": 0.0666
+   },
+   "8.0": {
+    "TP": 84,
+    "inspected": 1282,
+    "precision": 0.0655
+   },
+   "8.5": {
+    "TP": 92,
+    "inspected": 1363,
+    "precision": 0.0675
+   },
+   "9.0": {
+    "TP": 95,
+    "inspected": 1442,
+    "precision": 0.0659
+   },
+   "9.5": {
+    "TP": 96,
+    "inspected": 1523,
+    "precision": 0.063
+   },
+   "10.0": {
+    "TP": 101,
+    "inspected": 1603,
+    "precision": 0.063
+   },
+   "10.5": {
+    "TP": 102,
+    "inspected": 1684,
+    "precision": 0.0606
+   },
+   "11.0": {
+    "TP": 105,
+    "inspected": 1763,
+    "precision": 0.0596
+   },
+   "11.5": {
+    "TP": 111,
+    "inspected": 1843,
+    "precision": 0.0602
+   },
+   "12.0": {
+    "TP": 117,
+    "inspected": 1924,
+    "precision": 0.0608
+   },
+   "12.5": {
+    "TP": 119,
+    "inspected": 2003,
+    "precision": 0.0594
+   },
+   "13.0": {
+    "TP": 122,
+    "inspected": 2084,
+    "precision": 0.0585
+   },
+   "13.5": {
+    "TP": 126,
+    "inspected": 2163,
+    "precision": 0.0583
+   },
+   "14.0": {
+    "TP": 128,
+    "inspected": 2245,
+    "precision": 0.057
+   },
+   "14.5": {
+    "TP": 131,
+    "inspected": 2325,
+    "precision": 0.0563
+   },
+   "15.0": {
+    "TP": 135,
+    "inspected": 2403,
+    "precision": 0.0562
+   }
+  },
+  "최종 모델": {
+   "0.5": {
+    "TP": 58,
+    "inspected": 80,
+    "precision": 0.725
+   },
+   "1.0": {
+    "TP": 70,
+    "inspected": 160,
+    "precision": 0.4375
+   },
+   "1.5": {
+    "TP": 76,
+    "inspected": 240,
+    "precision": 0.3167
+   },
+   "2.0": {
+    "TP": 82,
+    "inspected": 321,
+    "precision": 0.2555
+   },
+   "2.5": {
+    "TP": 84,
+    "inspected": 401,
+    "precision": 0.2095
+   },
+   "3.0": {
+    "TP": 89,
+    "inspected": 480,
+    "precision": 0.1854
+   },
+   "3.5": {
+    "TP": 95,
+    "inspected": 561,
+    "precision": 0.1693
+   },
+   "4.0": {
+    "TP": 98,
+    "inspected": 641,
+    "precision": 0.1529
+   },
+   "4.5": {
+    "TP": 103,
+    "inspected": 721,
+    "precision": 0.1429
+   },
+   "5.0": {
+    "TP": 109,
+    "inspected": 801,
+    "precision": 0.1361
+   },
+   "5.5": {
+    "TP": 112,
+    "inspected": 882,
+    "precision": 0.127
+   },
+   "6.0": {
+    "TP": 117,
+    "inspected": 962,
+    "precision": 0.1216
+   },
+   "6.5": {
+    "TP": 122,
+    "inspected": 1042,
+    "precision": 0.1171
+   },
+   "7.0": {
+    "TP": 124,
+    "inspected": 1122,
+    "precision": 0.1105
+   },
+   "7.5": {
+    "TP": 126,
+    "inspected": 1202,
+    "precision": 0.1048
+   },
+   "8.0": {
+    "TP": 129,
+    "inspected": 1282,
+    "precision": 0.1006
+   },
+   "8.5": {
+    "TP": 132,
+    "inspected": 1363,
+    "precision": 0.0968
+   },
+   "9.0": {
+    "TP": 136,
+    "inspected": 1442,
+    "precision": 0.0943
+   },
+   "9.5": {
+    "TP": 139,
+    "inspected": 1523,
+    "precision": 0.0913
+   },
+   "10.0": {
+    "TP": 141,
+    "inspected": 1603,
+    "precision": 0.088
+   },
+   "10.5": {
+    "TP": 148,
+    "inspected": 1684,
+    "precision": 0.0879
+   },
+   "11.0": {
+    "TP": 150,
+    "inspected": 1763,
+    "precision": 0.0851
+   },
+   "11.5": {
+    "TP": 154,
+    "inspected": 1843,
+    "precision": 0.0836
+   },
+   "12.0": {
+    "TP": 157,
+    "inspected": 1924,
+    "precision": 0.0816
+   },
+   "12.5": {
+    "TP": 159,
+    "inspected": 2003,
+    "precision": 0.0794
+   },
+   "13.0": {
+    "TP": 161,
+    "inspected": 2084,
+    "precision": 0.0773
+   },
+   "13.5": {
+    "TP": 164,
+    "inspected": 2163,
+    "precision": 0.0758
+   },
+   "14.0": {
+    "TP": 169,
+    "inspected": 2245,
+    "precision": 0.0753
+   },
+   "14.5": {
+    "TP": 172,
+    "inspected": 2325,
+    "precision": 0.074
+   },
+   "15.0": {
+    "TP": 177,
+    "inspected": 2403,
+    "precision": 0.0737
+   }
+  },
+  "무작위": {
+   "0.5": {
+    "TP": 3.8,
+    "inspected": 80,
+    "precision": 0.0471
+   },
+   "1.0": {
+    "TP": 7.5,
+    "inspected": 160,
+    "precision": 0.0471
+   },
+   "1.5": {
+    "TP": 11.3,
+    "inspected": 240,
+    "precision": 0.0471
+   },
+   "2.0": {
+    "TP": 15.1,
+    "inspected": 321,
+    "precision": 0.0471
+   },
+   "2.5": {
+    "TP": 18.9,
+    "inspected": 401,
+    "precision": 0.0471
+   },
+   "3.0": {
+    "TP": 22.6,
+    "inspected": 480,
+    "precision": 0.0471
+   },
+   "3.5": {
+    "TP": 26.4,
+    "inspected": 561,
+    "precision": 0.0471
+   },
+   "4.0": {
+    "TP": 30.2,
+    "inspected": 641,
+    "precision": 0.0471
+   },
+   "4.5": {
+    "TP": 34.0,
+    "inspected": 721,
+    "precision": 0.0471
+   },
+   "5.0": {
+    "TP": 37.7,
+    "inspected": 801,
+    "precision": 0.0471
+   },
+   "5.5": {
+    "TP": 41.5,
+    "inspected": 882,
+    "precision": 0.0471
+   },
+   "6.0": {
+    "TP": 45.3,
+    "inspected": 962,
+    "precision": 0.0471
+   },
+   "6.5": {
+    "TP": 49.1,
+    "inspected": 1042,
+    "precision": 0.0471
+   },
+   "7.0": {
+    "TP": 52.8,
+    "inspected": 1122,
+    "precision": 0.0471
+   },
+   "7.5": {
+    "TP": 56.6,
+    "inspected": 1202,
+    "precision": 0.0471
+   },
+   "8.0": {
+    "TP": 60.4,
+    "inspected": 1282,
+    "precision": 0.0471
+   },
+   "8.5": {
+    "TP": 64.2,
+    "inspected": 1363,
+    "precision": 0.0471
+   },
+   "9.0": {
+    "TP": 67.9,
+    "inspected": 1442,
+    "precision": 0.0471
+   },
+   "9.5": {
+    "TP": 71.7,
+    "inspected": 1523,
+    "precision": 0.0471
+   },
+   "10.0": {
+    "TP": 75.5,
+    "inspected": 1603,
+    "precision": 0.0471
+   },
+   "10.5": {
+    "TP": 79.3,
+    "inspected": 1684,
+    "precision": 0.0471
+   },
+   "11.0": {
+    "TP": 83.0,
+    "inspected": 1763,
+    "precision": 0.0471
+   },
+   "11.5": {
+    "TP": 86.8,
+    "inspected": 1843,
+    "precision": 0.0471
+   },
+   "12.0": {
+    "TP": 90.6,
+    "inspected": 1924,
+    "precision": 0.0471
+   },
+   "12.5": {
+    "TP": 94.3,
+    "inspected": 2003,
+    "precision": 0.0471
+   },
+   "13.0": {
+    "TP": 98.2,
+    "inspected": 2084,
+    "precision": 0.0471
+   },
+   "13.5": {
+    "TP": 101.9,
+    "inspected": 2163,
+    "precision": 0.0471
+   },
+   "14.0": {
+    "TP": 105.7,
+    "inspected": 2245,
+    "precision": 0.0471
+   },
+   "14.5": {
+    "TP": 109.5,
+    "inspected": 2325,
+    "precision": 0.0471
+   },
+   "15.0": {
+    "TP": 113.2,
+    "inspected": 2403,
+    "precision": 0.0471
+   }
+  }
+ },
+ "at_3pct": {
+  "원본 변수 모델": {
+   "precision": 0.0771,
+   "breakeven_V": 13.0,
+   "roi": {
+    "5": -0.615,
+    "10": -0.229,
+    "20": 0.542
+   }
+  },
+  "최종 모델": {
+   "precision": 0.1854,
+   "breakeven_V": 5.4,
+   "roi": {
+    "5": -0.073,
+    "10": 0.854,
+    "20": 2.708
+   }
+  },
+  "무작위": {
+   "precision": 0.0471,
+   "breakeven_V": 21.2,
+   "roi": {
+    "5": -0.764,
+    "10": -0.529,
+    "20": -0.058
+   }
+  }
+ }
+}

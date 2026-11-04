@@ -1,0 +1,13 @@
+break schedule train [(600, 620), (720, 780), (920, 930)] | test only [(600, 620), (720, 780), (920, 930)]
+row-independence check (test only == full): True
+B+ leakage check (flip labels from 2024-01-15 → features up to that day unchanged): True
+===== all_train
+base (test 한 행)        PR-AUC 0.1479  lift 3.08  top3 P 0.208 R 0.128  wins 0/5
+B (실시간 로그)             PR-AUC 0.1497  lift 3.11  top3 P 0.195 R 0.121  wins 2/5
+B+ (전날 검사 결과)          PR-AUC 0.1505  lift 3.12  top3 P 0.199 R 0.123  wins 2/5
+importance {'fB_wo_n_before': 0.0401, 'fB_day_seq': 0.0339, 'fB_ac_batch': 0.033, 'fC_line_prevday_rate': 0.0316, 'fC_line_rate': 0.0206, 'fC_wo_rate': 0.0083, 'fB_ac_idle': 0.0071, 'fB_wo_days': 0.007, 'fC_wo_n': 0.0053, 'fB_wait_max_gap': 0.0039}
+===== sep_known_removed
+base (test 한 행)        PR-AUC 0.0934  lift 2.12  top3 P 0.129 R 0.088  wins 0/5
+B (실시간 로그)             PR-AUC 0.0911  lift 2.07  top3 P 0.128 R 0.087  wins 3/5
+B+ (전날 검사 결과)          PR-AUC 0.0919  lift 2.09  top3 P 0.13 R 0.088  wins 2/5
+importance {'fB_wo_n_before': 0.0574, 'fB_day_seq': 0.0425, 'fC_line_prevday_rate': 0.0342, 'fB_ac_batch': 0.0281, 'fC_line_rate': 0.0279, 'fB_ac_idle': 0.0092, 'fC_wo_rate': 0.0088, 'fB_wait_max_gap': 0.0058, 'fC_wo_n': 0.0056, 'fB_wo_days': 0.005}

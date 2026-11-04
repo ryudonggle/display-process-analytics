@@ -1,0 +1,274 @@
+{
+ "data": {
+  "n": 26855,
+  "defects": 1120,
+  "rate": 0.0417
+ },
+ "stats": {
+  "n_tested": 146,
+  "n_sig": 78,
+  "n_confirmed_month_adj": 16,
+  "confirmed_also_in_04": 8,
+  "confirmed_new": [
+   "Dam__HEAD NORMAL COORDINATE X AXIS(Stage2)",
+   "Dam__HEAD NORMAL COORDINATE X AXIS(Stage3)",
+   "fe_AC_temp_x_time",
+   "fe_AC_PxT_total",
+   "dev_Dam__Y(Stage2)",
+   "fe_Fill2_cure_time",
+   "Fill2__CURE SPEED",
+   "dev_Dam__X(Stage2)"
+  ]
+ },
+ "cv": {
+  "train_sep": {
+   "roc_auc": 0.6256,
+   "pr_auc": 0.1247,
+   "base_rate": 0.0417,
+   "lift": 2.99
+  },
+  "train_all_period": {
+   "roc_auc": 0.6287,
+   "pr_auc": 0.1297,
+   "base_rate": 0.0417,
+   "lift": 3.11
+  }
+ },
+ "time_split": {
+  "n_val": 4952,
+  "train_sep": {
+   "roc_auc": 0.5349,
+   "pr_auc": 0.0586,
+   "base_rate": 0.0489,
+   "lift": 1.2
+  },
+  "train_all_period": {
+   "roc_auc": 0.5512,
+   "pr_auc": 0.0677,
+   "base_rate": 0.0489,
+   "lift": 1.38
+  },
+  "top1pct_sep": {
+   "precision": 0.12,
+   "recall": 0.025
+  },
+  "top3pct_sep": {
+   "precision": 0.081,
+   "recall": 0.05
+  },
+  "top5pct_sep": {
+   "precision": 0.068,
+   "recall": 0.07
+  }
+ },
+ "shap": {
+  "holdout_pr_auc": 0.1248,
+  "process_share": {
+   "운영(대기·작업지시)": 32.2,
+   "Dam": 26.3,
+   "AutoClave(탈포)": 19.8,
+   "Fill1": 18.7,
+   "Fill2(UV)": 2.8,
+   "기타(모델·라인)": 0.2
+  },
+  "process_share_07": {
+   "Dam": 33.9,
+   "운영(대기·작업지시)": 27.5,
+   "Fill1": 19.9,
+   "AutoClave(탈포)": 14.9,
+   "Fill2(UV)": 3.5,
+   "기타(모델·라인)": 0.3
+  },
+  "top15": {
+   "fe_wo_span_h": 0.1437,
+   "fe_wo_rank": 0.1057,
+   "fe_tact_Dam_Fill1_diff": 0.0811,
+   "fe_qty_ratio": 0.0751,
+   "fe_wo_size": 0.0716,
+   "fe_weekday": 0.0632,
+   "fe_AC_PxT_total": 0.0617,
+   "fe_AC_P3_minus_P1": 0.0581,
+   "Fill1__Machine Tact time": 0.0554,
+   "AutoClave__Chamber Temp.": 0.0543,
+   "fe_hour": 0.0489,
+   "Dam__Machine Tact time": 0.0485,
+   "fe_AC_temp_x_time": 0.0465,
+   "fe_AC_1st_PxT": 0.0445,
+   "Dam__HEAD NORMAL COORDINATE X AXIS(Stage2)": 0.0423
+  },
+  "thresholds": {
+   "fe_wo_span_h": {
+    "risk_values": [
+     4.833,
+     5.75,
+     6.75,
+     9.416,
+     13.666,
+     17.083,
+     19.166,
+     21.166
+    ],
+    "safe_values": [
+     0.416,
+     1.0,
+     1.417,
+     1.833,
+     1303.75
+    ]
+   },
+   "fe_wo_rank": {
+    "risk_values": [
+     0.032,
+     0.283,
+     0.333,
+     0.38,
+     0.431,
+     0.482,
+     0.53,
+     0.582,
+     0.633,
+     0.679
+    ],
+    "safe_values": [
+     0.179,
+     0.728,
+     0.78,
+     0.828,
+     0.877,
+     0.975
+    ]
+   },
+   "fe_tact_Dam_Fill1_diff": {
+    "risk_values": [
+     -19.851,
+     -1.25,
+     2.1,
+     17.375,
+     64.125
+    ],
+    "safe_values": [
+     0.25,
+     0.4,
+     0.55,
+     13.55,
+     15.35
+    ]
+   },
+   "fe_qty_ratio": {
+    "risk_values": [
+     0.067,
+     0.775,
+     3.369,
+     4.166
+    ],
+    "safe_values": [
+     0.319,
+     1.208,
+     2.084,
+     2.823
+    ]
+   },
+   "fe_wo_size": {
+    "risk_values": [
+     20.5,
+     82.5,
+     93.5
+    ],
+    "safe_values": [
+     235.5,
+     238.5,
+     239.5
+    ]
+   },
+   "fe_weekday": {
+    "risk_values": [
+     0.0,
+     3.0
+    ],
+    "safe_values": [
+     1.0
+    ]
+   },
+   "fe_AC_PxT_total": {
+    "risk_values": [
+     133.074,
+     133.47,
+     133.833,
+     134.256
+    ],
+    "safe_values": [
+     135.067,
+     135.399,
+     171.574,
+     172.781
+    ]
+   },
+   "fe_AC_P3_minus_P1": {
+    "risk_values": [
+     0.189,
+     0.198,
+     0.199,
+     0.224,
+     0.428
+    ],
+    "safe_values": [
+     0.087,
+     0.184,
+     0.194
+    ]
+   },
+   "Fill1__Machine Tact time": {
+    "risk_values": [
+     57.8,
+     58.95,
+     63.1,
+     68.15,
+     71.15,
+     82.4
+    ],
+    "safe_values": [
+     52.975,
+     56.25,
+     56.5,
+     56.9
+    ]
+   },
+   "AutoClave__Chamber Temp.": {
+    "risk_values": [
+     51.0,
+     52.0,
+     53.0
+    ],
+    "safe_values": [
+     56.0,
+     57.0
+    ]
+   },
+   "fe_hour": {
+    "risk_values": [
+     9.0,
+     15.0
+    ],
+    "safe_values": [
+     18.0,
+     19.0,
+     20.0
+    ]
+   },
+   "Dam__Machine Tact time": {
+    "risk_values": [
+     57.85,
+     59.85,
+     76.0,
+     126.85
+    ],
+    "safe_values": [
+     49.15,
+     68.75,
+     71.25,
+     71.9
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,262 @@
+{
+ "perf": {
+  "holdout_auc": 0.6577284924814738,
+  "holdout_pr_auc": 0.18250708352630327,
+  "n_features": 146,
+  "n_explained": 8075,
+  "additivity_max_err": 1.2434497875801753e-14
+ },
+ "process_share": {
+  "Dam": 33.9,
+  "운영(대기·작업지시)": 27.5,
+  "Fill1": 19.9,
+  "AutoClave(탈포)": 14.9,
+  "Fill2(UV)": 3.5,
+  "기타(모델·라인)": 0.3
+ },
+ "top20": {
+  "dev_Dam__Y(Stage2)": 0.1461,
+  "fe_wo_span_h": 0.1441,
+  "fe_qty_ratio": 0.0742,
+  "fe_wo_size": 0.068,
+  "fe_wo_rank": 0.0625,
+  "Dam__Machine Tact time": 0.0532,
+  "fe_Dam_speed_mean": 0.0522,
+  "fe_weekday": 0.0506,
+  "Fill2__Machine Tact time": 0.0472,
+  "fe_tact_Dam_Fill1_diff": 0.0389,
+  "AutoClave__Chamber Temp.": 0.0389,
+  "dev_Fill1__X(Stage2)": 0.0389,
+  "fe_AC_P3_minus_P1": 0.0376,
+  "fe_Fill1_flow_rate": 0.0373,
+  "Fill1__Machine Tact time": 0.0355,
+  "fe_hour": 0.0349,
+  "fe_AC_PxT_total": 0.0343,
+  "fe_AC_1st_PxT": 0.0342,
+  "Dam__Stage2 Line2 Distance Speed": 0.0327,
+  "fe_Fill1_coord_dev_abs": 0.0317
+ },
+ "thresholds": {
+  "dev_Dam__Y(Stage2)": {
+   "risk_values": [
+    -2.5,
+    -2.3,
+    -1.9,
+    -0.2,
+    -0.1
+   ],
+   "safe_values": [
+    0.0,
+    0.2,
+    6.0,
+    9.6,
+    9.8,
+    113.2,
+    122.8,
+    123.5
+   ]
+  },
+  "fe_wo_span_h": {
+   "risk_values": [
+    4.25,
+    5.083,
+    6.083,
+    7.583,
+    9.666,
+    12.333,
+    22.25,
+    40.334,
+    1298.667
+   ],
+   "safe_values": [
+    0.416,
+    1.167,
+    1.667,
+    2.0,
+    2.917,
+    3.5
+   ]
+  },
+  "fe_qty_ratio": {
+   "risk_values": [
+    0.179,
+    3.212,
+    3.967,
+    5.309,
+    43.725
+   ],
+   "safe_values": [
+    0.295,
+    0.713,
+    0.817,
+    0.941,
+    1.095,
+    1.269,
+    1.469
+   ]
+  },
+  "fe_wo_size": {
+   "risk_values": [
+    19.5,
+    43.0,
+    54.5,
+    90.5
+   ],
+   "safe_values": [
+    210.5,
+    237.0,
+    239.0,
+    310.0
+   ]
+  },
+  "fe_wo_rank": {
+   "risk_values": [
+    0.03,
+    0.083,
+    0.625
+   ],
+   "safe_values": [
+    0.778,
+    0.827
+   ]
+  },
+  "Dam__Machine Tact time": {
+   "risk_values": [
+    59.6,
+    75.85,
+    82.65,
+    88.4,
+    90.35
+   ],
+   "safe_values": [
+    49.1,
+    54.15,
+    56.15,
+    56.875
+   ]
+  },
+  "fe_Dam_speed_mean": {
+   "risk_values": [],
+   "safe_values": [
+    4000.0,
+    4400.0,
+    5580.0,
+    5600.0,
+    5800.0,
+    5920.0,
+    6000.0,
+    6100.0
+   ]
+  },
+  "fe_weekday": {
+   "risk_values": [
+    0.0,
+    3.0
+   ],
+   "safe_values": [
+    1.0
+   ]
+  },
+  "Fill2__Machine Tact time": {
+   "risk_values": [
+    20.15,
+    20.3,
+    20.7,
+    23.55
+   ],
+   "safe_values": [
+    18.2,
+    19.15,
+    19.25
+   ]
+  },
+  "fe_tact_Dam_Fill1_diff": {
+   "risk_values": [
+    -23.25,
+    -1.85
+   ],
+   "safe_values": [
+    -0.3
+   ]
+  },
+  "AutoClave__Chamber Temp.": {
+   "risk_values": [
+    50.0,
+    51.0,
+    57.0
+   ],
+   "safe_values": []
+  },
+  "dev_Fill1__X(Stage2)": {
+   "risk_values": [
+    -1.2,
+    0.7,
+    1.0,
+    1.5
+   ],
+   "safe_values": []
+  }
+ },
+ "interactions": [
+  {
+   "a": "fe_wo_span_h",
+   "b": "fe_qty_ratio",
+   "strength": 0.0286
+  },
+  {
+   "a": "fe_wo_rank",
+   "b": "fe_wo_span_h",
+   "strength": 0.0249
+  },
+  {
+   "a": "fe_wo_size",
+   "b": "fe_wo_span_h",
+   "strength": 0.0233
+  },
+  {
+   "a": "fe_AC_PxT_total",
+   "b": "fe_wo_span_h",
+   "strength": 0.0192
+  },
+  {
+   "a": "Dam__Machine Tact time",
+   "b": "Fill1__Machine Tact time",
+   "strength": 0.0185
+  },
+  {
+   "a": "fe_wo_size",
+   "b": "fe_wo_rank",
+   "strength": 0.0158
+  },
+  {
+   "a": "dev_Dam__Y(Stage2)",
+   "b": "fe_wo_span_h",
+   "strength": 0.0141
+  },
+  {
+   "a": "fe_hour",
+   "b": "fe_qty_ratio",
+   "strength": 0.0135
+  },
+  {
+   "a": "fe_wo_rank",
+   "b": "fe_qty_ratio",
+   "strength": 0.013
+  },
+  {
+   "a": "Dam__Machine Tact time",
+   "b": "dev_Dam__Y(Stage2)",
+   "strength": 0.0127
+  },
+  {
+   "a": "fe_weekday",
+   "b": "fe_wo_size",
+   "strength": 0.0125
+  },
+  {
+   "a": "fe_weekday",
+   "b": "fe_qty_ratio",
+   "strength": 0.0122
+  }
+ ]
+}

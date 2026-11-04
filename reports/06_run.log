@@ -1,0 +1,31 @@
+Seed set to 42
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+fold 0 epochs=13 auc=0.6705
+Seed set to 43
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+fold 1 epochs=12 auc=0.6903
+Seed set to 44
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+fold 2 epochs=18 auc=0.6981
+Seed set to 45
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+fold 3 epochs=9 auc=0.6859
+Seed set to 46
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+fold 4 epochs=19 auc=0.6898
+            model  roc_auc  pr_auc  best_f1
+              mlp   0.6863  0.2364   0.2370
+         lightgbm   0.6962  0.2844   0.2811
+    ensemble_gbdt   0.7008  0.2864   0.2808
+ensemble_gbdt+mlp   0.7015  0.2721   0.2668
+corr(mlp, lgb rank) 0.743

@@ -1,0 +1,362 @@
+{
+ "leak_check": true,
+ "sets": {
+  "base (test 한 행)": 135,
+  "B (실시간 로그)": 147,
+  "B+ (전날 검사 결과)": 151
+ },
+ "results": {
+  "all_train": {
+   "base (test 한 행)": {
+    "monthly": [
+     {
+      "month": "2023-12",
+      "n": 4255,
+      "base": 0.0519,
+      "pr_auc": 0.1945,
+      "lift": 3.74,
+      "top3_precision": 0.26,
+      "top3_recall": 0.149
+     },
+     {
+      "month": "2024-01",
+      "n": 4314,
+      "base": 0.0371,
+      "pr_auc": 0.1036,
+      "lift": 2.79,
+      "top3_precision": 0.132,
+      "top3_recall": 0.106
+     },
+     {
+      "month": "2024-02",
+      "n": 2349,
+      "base": 0.0456,
+      "pr_auc": 0.1371,
+      "lift": 3.01,
+      "top3_precision": 0.2,
+      "top3_recall": 0.131
+     },
+     {
+      "month": "2024-03",
+      "n": 2483,
+      "base": 0.056,
+      "pr_auc": 0.1522,
+      "lift": 2.72,
+      "top3_precision": 0.23,
+      "top3_recall": 0.122
+     },
+     {
+      "month": "2024-04",
+      "n": 2628,
+      "base": 0.0487,
+      "pr_auc": 0.1523,
+      "lift": 3.13,
+      "top3_precision": 0.218,
+      "top3_recall": 0.133
+     }
+    ],
+    "mean_pr_auc": 0.1479,
+    "mean_lift": 3.08,
+    "mean_top3_precision": 0.208,
+    "mean_top3_recall": 0.128,
+    "wins_vs_base": 0
+   },
+   "B (실시간 로그)": {
+    "monthly": [
+     {
+      "month": "2023-12",
+      "n": 4255,
+      "base": 0.0519,
+      "pr_auc": 0.1927,
+      "lift": 3.71,
+      "top3_precision": 0.244,
+      "top3_recall": 0.14
+     },
+     {
+      "month": "2024-01",
+      "n": 4314,
+      "base": 0.0371,
+      "pr_auc": 0.1012,
+      "lift": 2.73,
+      "top3_precision": 0.124,
+      "top3_recall": 0.1
+     },
+     {
+      "month": "2024-02",
+      "n": 2349,
+      "base": 0.0456,
+      "pr_auc": 0.137,
+      "lift": 3.01,
+      "top3_precision": 0.2,
+      "top3_recall": 0.131
+     },
+     {
+      "month": "2024-03",
+      "n": 2483,
+      "base": 0.056,
+      "pr_auc": 0.1525,
+      "lift": 2.72,
+      "top3_precision": 0.203,
+      "top3_recall": 0.108
+     },
+     {
+      "month": "2024-04",
+      "n": 2628,
+      "base": 0.0487,
+      "pr_auc": 0.165,
+      "lift": 3.39,
+      "top3_precision": 0.205,
+      "top3_recall": 0.125
+     }
+    ],
+    "mean_pr_auc": 0.1497,
+    "mean_lift": 3.11,
+    "mean_top3_precision": 0.195,
+    "mean_top3_recall": 0.121,
+    "wins_vs_base": 2
+   },
+   "B+ (전날 검사 결과)": {
+    "monthly": [
+     {
+      "month": "2023-12",
+      "n": 4255,
+      "base": 0.0519,
+      "pr_auc": 0.1916,
+      "lift": 3.69,
+      "top3_precision": 0.252,
+      "top3_recall": 0.145
+     },
+     {
+      "month": "2024-01",
+      "n": 4314,
+      "base": 0.0371,
+      "pr_auc": 0.1019,
+      "lift": 2.75,
+      "top3_precision": 0.124,
+      "top3_recall": 0.1
+     },
+     {
+      "month": "2024-02",
+      "n": 2349,
+      "base": 0.0456,
+      "pr_auc": 0.1355,
+      "lift": 2.97,
+      "top3_precision": 0.2,
+      "top3_recall": 0.131
+     },
+     {
+      "month": "2024-03",
+      "n": 2483,
+      "base": 0.056,
+      "pr_auc": 0.1591,
+      "lift": 2.84,
+      "top3_precision": 0.216,
+      "top3_recall": 0.115
+     },
+     {
+      "month": "2024-04",
+      "n": 2628,
+      "base": 0.0487,
+      "pr_auc": 0.1643,
+      "lift": 3.37,
+      "top3_precision": 0.205,
+      "top3_recall": 0.125
+     }
+    ],
+    "mean_pr_auc": 0.1505,
+    "mean_lift": 3.12,
+    "mean_top3_precision": 0.199,
+    "mean_top3_recall": 0.123,
+    "wins_vs_base": 2
+   },
+   "importance_new": {
+    "fB_wo_n_before": 0.0401,
+    "fB_day_seq": 0.0339,
+    "fB_ac_batch": 0.033,
+    "fC_line_prevday_rate": 0.0316,
+    "fC_line_rate": 0.0206,
+    "fC_wo_rate": 0.0083,
+    "fB_ac_idle": 0.0071,
+    "fB_wo_days": 0.007,
+    "fC_wo_n": 0.0053,
+    "fB_wait_max_gap": 0.0039
+   }
+  },
+  "sep_known_removed": {
+   "base (test 한 행)": {
+    "monthly": [
+     {
+      "month": "2023-12",
+      "n": 4144,
+      "base": 0.0446,
+      "pr_auc": 0.1016,
+      "lift": 2.28,
+      "top3_precision": 0.129,
+      "top3_recall": 0.086
+     },
+     {
+      "month": "2024-01",
+      "n": 4061,
+      "base": 0.0342,
+      "pr_auc": 0.0762,
+      "lift": 2.23,
+      "top3_precision": 0.107,
+      "top3_recall": 0.094
+     },
+     {
+      "month": "2024-02",
+      "n": 2142,
+      "base": 0.0439,
+      "pr_auc": 0.0807,
+      "lift": 1.84,
+      "top3_precision": 0.125,
+      "top3_recall": 0.085
+     },
+     {
+      "month": "2024-03",
+      "n": 2382,
+      "base": 0.0525,
+      "pr_auc": 0.1178,
+      "lift": 2.24,
+      "top3_precision": 0.141,
+      "top3_recall": 0.08
+     },
+     {
+      "month": "2024-04",
+      "n": 2570,
+      "base": 0.0455,
+      "pr_auc": 0.0905,
+      "lift": 1.99,
+      "top3_precision": 0.143,
+      "top3_recall": 0.094
+     }
+    ],
+    "mean_pr_auc": 0.0934,
+    "mean_lift": 2.12,
+    "mean_top3_precision": 0.129,
+    "mean_top3_recall": 0.088,
+    "wins_vs_base": 0
+   },
+   "B (실시간 로그)": {
+    "monthly": [
+     {
+      "month": "2023-12",
+      "n": 4144,
+      "base": 0.0446,
+      "pr_auc": 0.1019,
+      "lift": 2.28,
+      "top3_precision": 0.105,
+      "top3_recall": 0.07
+     },
+     {
+      "month": "2024-01",
+      "n": 4061,
+      "base": 0.0342,
+      "pr_auc": 0.0788,
+      "lift": 2.3,
+      "top3_precision": 0.116,
+      "top3_recall": 0.101
+     },
+     {
+      "month": "2024-02",
+      "n": 2142,
+      "base": 0.0439,
+      "pr_auc": 0.0718,
+      "lift": 1.64,
+      "top3_precision": 0.109,
+      "top3_recall": 0.074
+     },
+     {
+      "month": "2024-03",
+      "n": 2382,
+      "base": 0.0525,
+      "pr_auc": 0.109,
+      "lift": 2.08,
+      "top3_precision": 0.155,
+      "top3_recall": 0.088
+     },
+     {
+      "month": "2024-04",
+      "n": 2570,
+      "base": 0.0455,
+      "pr_auc": 0.0942,
+      "lift": 2.07,
+      "top3_precision": 0.156,
+      "top3_recall": 0.103
+     }
+    ],
+    "mean_pr_auc": 0.0911,
+    "mean_lift": 2.07,
+    "mean_top3_precision": 0.128,
+    "mean_top3_recall": 0.087,
+    "wins_vs_base": 3
+   },
+   "B+ (전날 검사 결과)": {
+    "monthly": [
+     {
+      "month": "2023-12",
+      "n": 4144,
+      "base": 0.0446,
+      "pr_auc": 0.1002,
+      "lift": 2.24,
+      "top3_precision": 0.105,
+      "top3_recall": 0.07
+     },
+     {
+      "month": "2024-01",
+      "n": 4061,
+      "base": 0.0342,
+      "pr_auc": 0.0814,
+      "lift": 2.38,
+      "top3_precision": 0.124,
+      "top3_recall": 0.108
+     },
+     {
+      "month": "2024-02",
+      "n": 2142,
+      "base": 0.0439,
+      "pr_auc": 0.0701,
+      "lift": 1.6,
+      "top3_precision": 0.094,
+      "top3_recall": 0.064
+     },
+     {
+      "month": "2024-03",
+      "n": 2382,
+      "base": 0.0525,
+      "pr_auc": 0.1131,
+      "lift": 2.15,
+      "top3_precision": 0.169,
+      "top3_recall": 0.096
+     },
+     {
+      "month": "2024-04",
+      "n": 2570,
+      "base": 0.0455,
+      "pr_auc": 0.0946,
+      "lift": 2.08,
+      "top3_precision": 0.156,
+      "top3_recall": 0.103
+     }
+    ],
+    "mean_pr_auc": 0.0919,
+    "mean_lift": 2.09,
+    "mean_top3_precision": 0.13,
+    "mean_top3_recall": 0.088,
+    "wins_vs_base": 2
+   },
+   "importance_new": {
+    "fB_wo_n_before": 0.0574,
+    "fB_day_seq": 0.0425,
+    "fC_line_prevday_rate": 0.0342,
+    "fB_ac_batch": 0.0281,
+    "fC_line_rate": 0.0279,
+    "fB_ac_idle": 0.0092,
+    "fC_wo_rate": 0.0088,
+    "fB_wait_max_gap": 0.0058,
+    "fC_wo_n": 0.0056,
+    "fB_wo_days": 0.005
+   }
+  }
+ }
+}

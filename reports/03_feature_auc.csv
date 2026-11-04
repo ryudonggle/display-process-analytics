@@ -1,0 +1,71 @@
+feature,auc,dir,desc
+dev_Dam__Z(Stage1),0.5822,+,Dam__HEAD NORMAL COORDINATE Z AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+fe_Dam_speed_mean,0.5777,+,Dam 헤드 이동속도 평균
+dev_Dam__Y(Stage2),0.5771,-,Dam__HEAD NORMAL COORDINATE Y AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+dev_Fill1__X(Stage2),0.576,+,Fill1__HEAD NORMAL COORDINATE X AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+fe_days,0.5717,-,기간 경과일 (추세 통제용)
+dev_Fill1__Y(Stage3),0.5684,-,Fill1__HEAD NORMAL COORDINATE Y AXIS(Stage3) — 라인·모델 중앙값 대비 편차
+fe_Dam_time_total,0.5642,-,Dam 총 토출 시간
+fe_Fill1_coord_dev_abs,0.5637,+,Fill1 좌표 편차 절대합
+fe_Dam_vol_per_speed,0.5629,-,Dam 도포량/이동속도 (선당 도포 두께 대리)
+dev_Fill1__Y(Stage1),0.5575,-,Fill1__HEAD NORMAL COORDINATE Y AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+fe_Dam_Fill1_vol_ratio,0.5571,-,Dam(가벽)/Fill1(내측) 도포량 비
+fe_recipe_new,0.5569,-,2023-10 이후 신규 레시피
+fe_Fill1_vol_total,0.5567,+,Fill1 총 도포량
+fe_Dam_vol_total,0.556,-,Dam 총 도포량
+fe_Fill1_time_total,0.5559,+,Fill1 총 토출 시간
+fe_lead_total,0.5547,+,Dam→AutoClave 총 리드타임(시간)
+fe_wo_span_h,0.5541,+,작업지시 생산 기간(시간)
+dev_Fill1__X(Stage3),0.554,+,Fill1__HEAD NORMAL COORDINATE X AXIS(Stage3) — 라인·모델 중앙값 대비 편차
+fe_Fill1_X_s1_s3,0.5507,-,Fill1 X축 Stage1-Stage3 위치차
+dev_Fill1__Z(Stage1),0.5506,-,Fill1__HEAD NORMAL COORDINATE Z AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+dev_Fill1__Z(Stage2),0.5499,-,Fill1__HEAD NORMAL COORDINATE Z AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+dev_Fill1__Z(Stage3),0.5499,-,Fill1__HEAD NORMAL COORDINATE Z AXIS(Stage3) — 라인·모델 중앙값 대비 편차
+fe_AC_PxT_total,0.5464,+,탈포 압력×시간 총합 (탈포 에너지)
+dev_Dam__X(Stage1),0.5461,-,Dam__HEAD NORMAL COORDINATE X AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+fe_AC_2nd_PxT,0.5424,+,탈포 2nd 압력×시간
+dev_Dam__X(Stage2),0.5419,-,Dam__HEAD NORMAL COORDINATE X AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+fe_Fill1_vol_s2_ratio,0.5398,+,Fill1 Stage2 도포 비중
+fe_Dam_flow_rate,0.5386,-,Dam 평균 토출률(양/시간)
+dev_Fill1__X(Stage1),0.5343,-,Fill1__HEAD NORMAL COORDINATE X AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+dev_Dam__Y(Stage3),0.532,-,Dam__HEAD NORMAL COORDINATE Y AXIS(Stage3) — 라인·모델 중앙값 대비 편차
+fe_lead_Fill2_AC,0.5319,+,Fill2→AutoClave 대기(분)
+fe_Dam_vol_s2_ratio,0.5314,-,Dam Stage2 도포 비중
+dev_Dam__Y(Stage1),0.5313,-,Dam__HEAD NORMAL COORDINATE Y AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+fe_AC_time_total,0.5277,+,탈포 총 시간
+dev_Fill1__Y(Stage2),0.5275,+,Fill1__HEAD NORMAL COORDINATE Y AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+dev_Dam__X(Stage3),0.5261,-,Dam__HEAD NORMAL COORDINATE X AXIS(Stage3) — 라인·모델 중앙값 대비 편차
+fe_AC_temp_x_time,0.5259,+,챔버 온도×시간
+fe_cure_time_total,0.5231,+,UV 경화 시간 합
+fe_Dam_cure_time,0.5214,+,Dam UV 경화 시간(거리/속도) — UV 조사량 대리변수
+fe_AC_1st_PxT,0.5186,+,탈포 1st 압력×시간
+fe_qty_ratio,0.5157,-,작업지시 내 생산 진행률
+fe_Dam_Y_s1_s3,0.5157,+,Dam Y축 Stage1-Stage3 위치차
+fe_AC_3rd_PxT,0.5152,-,탈포 3rd 압력×시간
+fe_Dam_coord_dev_abs,0.514,+,Dam 좌표 편차 절대합
+fe_lead_Dam_Fill1,0.5139,+,Dam→Fill1 대기(분)
+fe_weekday,0.5128,+,요일
+fe_lead_Fill1_Fill2,0.5127,+,Fill1→Fill2 대기(분)
+fe_wo_rank,0.5106,-,작업지시 내 투입 순서(0~1)
+fe_Fill1_flow_rate,0.5106,+,Fill1 평균 토출률(양/시간)
+fe_Dam_thick_abs,0.5087,-,Dam 두께 편차 절대합
+fe_Dam_speed_std,0.5085,-,Dam 헤드 이동속도 구간 편차
+fe_Dam_X_s1_s3,0.508,-,Dam X축 Stage1-Stage3 위치차
+fe_Dam_cure_dist,0.5074,+,Dam UV 경화 이동거리
+fe_Fill1_vol_s1_s3_diff,0.5068,+,Fill1 Stage1-3 도포량 비대칭
+fe_Fill1_Y_s1_s3,0.5066,-,Fill1 Y축 Stage1-Stage3 위치차
+fe_wo_size,0.5063,-,작업지시 규모(제품 수)
+fe_Fill2_coord_dev_abs,0.5054,+,Fill2 좌표 편차 절대합
+fe_Dam_vol_s1_s3_diff,0.5053,-,Dam Stage1-3 도포량 비대칭
+fe_tact_Dam_Fill1_diff,0.5048,-,Dam-Fill1 택트타임 차
+fe_AC_P3_minus_P1,0.5037,+,탈포 압력 상승폭
+fe_hour,0.5033,-,작업 시각
+dev_Fill2__X(Stage3),0.5027,+,Fill2__HEAD NORMAL COORDINATE X AXIS(Stage3) — 라인·모델 중앙값 대비 편차
+fe_Fill1_Z_s1_s3,0.5015,-,Fill1 Z축 Stage1-Stage3 위치차
+fe_Fill2_cure_time,0.5015,-,Fill2 UV 경화 시간(거리/속도) — UV 조사량 대리변수
+dev_Fill2__X(Stage1),0.501,+,Fill2__HEAD NORMAL COORDINATE X AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+dev_Fill2__Y(Stage2),0.5009,+,Fill2__HEAD NORMAL COORDINATE Y AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+dev_Fill2__Z(Stage1),0.5009,-,Fill2__HEAD NORMAL COORDINATE Z AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+dev_Fill2__Y(Stage1),0.5009,+,Fill2__HEAD NORMAL COORDINATE Y AXIS(Stage1) — 라인·모델 중앙값 대비 편차
+dev_Fill2__X(Stage2),0.5009,+,Fill2__HEAD NORMAL COORDINATE X AXIS(Stage2) — 라인·모델 중앙값 대비 편차
+fe_Fill1_zero_dispense,0.5002,+,Fill1 도포 0 (미도포)

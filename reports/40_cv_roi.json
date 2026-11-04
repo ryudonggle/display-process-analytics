@@ -1,0 +1,32 @@
+{
+ "무작위": {
+  "top1_precision": 0.058,
+  "top3_precision": 0.058,
+  "breakeven_top3": 17.2,
+  "roi_top3": {
+   "5": -0.71,
+   "10": -0.42,
+   "20": 0.16
+  }
+ },
+ "원본 변수 모델": {
+  "top1_precision": 0.38,
+  "top3_precision": 0.245,
+  "breakeven_top3": 4.1,
+  "roi_top3": {
+   "5": 0.226,
+   "10": 1.453,
+   "20": 3.905
+  }
+ },
+ "최종 모델": {
+  "top1_precision": 0.837,
+  "top3_precision": 0.403,
+  "breakeven_top3": 2.5,
+  "roi_top3": {
+   "5": 1.016,
+   "10": 3.033,
+   "20": 7.066
+  }
+ }
+}

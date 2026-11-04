@@ -1,0 +1,16 @@
+{'model': 'logistic', 'roc_auc': 0.6822281596491894, 'pr_auc': 0.23792158415900883, 'best_f1': 0.24236092974667015, 'threshold': np.float64(0.725), 'precision': 0.3137254901960784, 'recall': 0.1974468085106383, 'sec': 44}
+{'model': 'random_forest', 'roc_auc': 0.6969877301024016, 'pr_auc': 0.2789601696443712, 'best_f1': 0.2781869688385269, 'threshold': np.float64(0.44), 'precision': 0.4161016949152542, 'recall': 0.20893617021276595, 'sec': 155}
+{'model': 'lightgbm', 'roc_auc': 0.696215736963373, 'pr_auc': 0.2844041526873586, 'best_f1': 0.2821299135768051, 'threshold': np.float64(0.16999999999999998), 'precision': 0.40905416329830235, 'recall': 0.2153191489361702, 'sec': 38}
+{'model': 'xgboost', 'roc_auc': 0.6987769191649957, 'pr_auc': 0.2816797132899503, 'best_f1': 0.27647395535203206, 'threshold': np.float64(0.16499999999999998), 'precision': 0.4222027972027972, 'recall': 0.20553191489361702, 'sec': 62}
+{'model': 'catboost', 'roc_auc': 0.6994188806088332, 'pr_auc': 0.2867581295900824, 'best_f1': 0.2779834804898889, 'threshold': np.float64(0.15), 'precision': 0.42032730404823426, 'recall': 0.2076595744680851, 'sec': 92}
+                       model  roc_auc  pr_auc  best_f1  threshold  precision  recall   sec
+                    logistic   0.6822  0.2379   0.2424      0.725     0.3137  0.1974  44.0
+               random_forest   0.6970  0.2790   0.2782      0.440     0.4161  0.2089 155.0
+                    lightgbm   0.6962  0.2844   0.2821      0.170     0.4091  0.2153  38.0
+                     xgboost   0.6988  0.2817   0.2765      0.165     0.4222  0.2055  62.0
+                    catboost   0.6994  0.2868   0.2780      0.150     0.4203  0.2077  92.0
+               ensemble_gbdt   0.7008  0.2864   0.2538      0.900     0.2088  0.3234   NaN
+               lightgbm+rule   0.6962  0.2854   0.2821      0.170     0.4091  0.2153   NaN
+          ensemble_gbdt+rule   0.7008  0.2876   0.2538      0.900     0.2088  0.3234   NaN
+      lightgbm[process_only]   0.6937  0.2822   0.2760      0.155     0.3555  0.2255   NaN
+lightgbm[group_by_workorder]   0.6522  0.2043   0.2016      0.110     0.2641  0.1630   NaN

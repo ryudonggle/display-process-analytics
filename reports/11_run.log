@@ -1,0 +1,6 @@
+{'exp': 'A_raw', 'f1': np.float64(0.1984), 'pr_auc': 0.1715, 'roc_auc': 0.6616, 'th': np.float64(0.0938), 'n_feat': 87, 'sec': 34}
+{'exp': 'B_v1', 'f1': np.float64(0.2817), 'pr_auc': 0.2844, 'roc_auc': 0.6962, 'th': np.float64(0.1704), 'n_feat': 164, 'sec': 78}
+{'exp': 'C_v1+v2', 'f1': np.float64(0.2901), 'pr_auc': 0.2905, 'roc_auc': 0.701, 'th': np.float64(0.1846), 'n_feat': 212, 'sec': 199}
+{'exp': 'D_realtime', 'f1': np.float64(0.2819), 'pr_auc': 0.2874, 'roc_auc': 0.7009, 'th': np.float64(0.1495), 'n_feat': 205, 'sec': 164}
+{'exp': 'E_C_v1+v2_top60', 'f1': np.float64(0.2877), 'pr_auc': 0.2907, 'roc_auc': 0.6992, 'th': np.float64(0.1999), 'n_feat': 60}
+{'exp': 'E_C_v1+v2_top100', 'f1': np.float64(0.2844), 'pr_auc': 0.2896, 'roc_auc': 0.7006, 'th': np.float64(0.1583), 'n_feat': 100}

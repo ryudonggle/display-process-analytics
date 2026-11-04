@@ -1,0 +1,123 @@
+{
+ "data": {
+  "n": 26855,
+  "defects": 1120,
+  "rate": 0.0417
+ },
+ "stats": {
+  "n_tested": 146,
+  "n_sig": 78,
+  "n_confirmed_month_adj": 16,
+  "confirmed_also_in_04": 8,
+  "confirmed_new": [
+   "Dam__HEAD NORMAL COORDINATE X AXIS(Stage2)",
+   "Dam__HEAD NORMAL COORDINATE X AXIS(Stage3)",
+   "fe_AC_temp_x_time",
+   "fe_AC_PxT_total",
+   "dev_Dam__Y(Stage2)",
+   "fe_Fill2_cure_time",
+   "Fill2__CURE SPEED",
+   "dev_Dam__X(Stage2)"
+  ]
+ },
+ "cv": {
+  "train_sep": {
+   "roc_auc": 0.6256,
+   "pr_auc": 0.1247,
+   "base_rate": 0.0417,
+   "lift": 2.99
+  },
+  "train_all_period": {
+   "roc_auc": 0.6287,
+   "pr_auc": 0.1297,
+   "base_rate": 0.0417,
+   "lift": 3.11
+  }
+ },
+ "time_split": {
+  "n_val": 4952,
+  "train_sep": {
+   "roc_auc": 0.5349,
+   "pr_auc": 0.0586,
+   "base_rate": 0.0489,
+   "lift": 1.2
+  },
+  "train_all_period": {
+   "roc_auc": 0.5512,
+   "pr_auc": 0.0677,
+   "base_rate": 0.0489,
+   "lift": 1.38
+  },
+  "top1pct_sep": {
+   "precision": 0.12,
+   "recall": 0.025
+  },
+  "top3pct_sep": {
+   "precision": 0.081,
+   "recall": 0.05
+  },
+  "top5pct_sep": {
+   "precision": 0.068,
+   "recall": 0.07
+  }
+ }
+}
+SHAP 0.1248 {'운영(대기·작업지시)': 32.2, 'Dam': 26.3, 'AutoClave(탈포)': 19.8, 'Fill1': 18.7, 'Fill2(UV)': 2.8, '기타(모델·라인)': 0.2} 
+07: {'Dam': 33.9, '운영(대기·작업지시)': 27.5, 'Fill1': 19.9, 'AutoClave(탈포)': 14.9, 'Fill2(UV)': 3.5, '기타(모델·라인)': 0.3}
+fe_wo_span_h                                  0.1437
+fe_wo_rank                                    0.1057
+fe_tact_Dam_Fill1_diff                        0.0811
+fe_qty_ratio                                  0.0751
+fe_wo_size                                    0.0716
+fe_weekday                                    0.0632
+fe_AC_PxT_total                               0.0617
+fe_AC_P3_minus_P1                             0.0581
+Fill1__Machine Tact time                      0.0554
+AutoClave__Chamber Temp.                      0.0543
+fe_hour                                       0.0489
+Dam__Machine Tact time                        0.0485
+fe_AC_temp_x_time                             0.0465
+fe_AC_1st_PxT                                 0.0445
+Dam__HEAD NORMAL COORDINATE X AXIS(Stage2)    0.0423
+dtype: float64
+                                     feature       r      q    OR_per_SD      lo           hi  p_adj confirmed  was_robust_04   med_def    med_ok
+  Dam__HEAD NORMAL COORDINATE X AXIS(Stage2)  0.0970 0.0000 1.304600e+00  1.1057 1.539300e+00 0.0016      True          False   465.300   465.300
+                    Fill2__Machine Tact time  0.0930 0.0000 1.013000e+00  0.9812 1.045900e+00 0.4274     False          False    19.900    19.900
+  Dam__HEAD NORMAL COORDINATE X AXIS(Stage3)  0.0899 0.0000 9.099503e+12 48.8446 1.695192e+24 0.0242      True          False   551.300   550.500
+                           fe_AC_temp_x_time -0.0876 0.0000 6.782000e-01  0.6036 7.620000e-01 0.0000      True          False 19239.000 19602.000
+  Dam__HEAD NORMAL COORDINATE Y AXIS(Stage2)  0.0769 0.0001 2.292700e+00  0.8442 6.226700e+00 0.1036     False          False  1270.700  1270.700
+                            fe_AC_time_total -0.0759 0.0000 5.356000e-01  0.4655 6.163000e-01 0.0000      True           True   363.000   363.000
+          AutoClave__Chamber Temp. Unit Time -0.0759 0.0000 5.356000e-01  0.4655 6.163000e-01 0.0000      True           True   363.000   363.000
+                               Dam__PalletID  0.0667 0.0009 1.062000e+00  0.9414 1.198000e+00 0.3281     False          False     9.000     9.000
+            Dam__Stage2 Line3 Distance Speed  0.0665 0.0009 1.222100e+00  1.1222 1.330700e+00 0.0000      True           True  5500.000  5500.000
+            Dam__Stage2 Line1 Distance Speed  0.0663 0.0009 1.234900e+00  1.1351 1.343400e+00 0.0000      True           True  5500.000  5500.000
+                             Fill1__PalletID  0.0662 0.0009 1.057800e+00  0.9376 1.193300e+00 0.3612     False          False    10.000     9.000
+                             Fill2__PalletID  0.0653 0.0010 1.051200e+00  0.9318 1.185800e+00 0.4168     False          False    10.000     9.000
+Fill1__HEAD NORMAL COORDINATE Y AXIS(Stage3)  0.0647 0.0009 1.250000e-02  0.0000 1.111311e+34 0.9174     False          False  1322.800  1322.800
+                             fe_AC_PxT_total -0.0642 0.0012 6.327000e-01  0.5578 7.176000e-01 0.0000      True          False   135.579   135.821
+                          dev_Dam__Y(Stage2)  0.0635 0.0004 1.129800e+00  1.0228 1.247900e+00 0.0162      True          False     0.000     0.000
+                               fe_lead_total  0.0632 0.0009 1.385300e+00  1.3230 1.450600e+00 0.0000      True           True     0.500     0.500
+            Dam__Stage2 Line2 Distance Speed  0.0617 0.0014 1.214000e+00  1.1121 1.325300e+00 0.0000      True           True  5500.000  5500.000
+  Dam__HEAD NORMAL COORDINATE Y AXIS(Stage3)  0.0613 0.0012 9.309400e+00  0.0000 3.043583e+11 0.8567     False           True  1271.800  1271.300
+                          fe_Fill2_cure_time  0.0613 0.0000 1.151100e+00  1.0747 1.232900e+00 0.0001      True          False    15.600    15.600
+                           Fill2__CURE SPEED -0.0613 0.0000 8.637000e-01  0.8051 9.267000e-01 0.0000      True          False    50.000    50.000
+                          dev_Dam__X(Stage2)  0.0612 0.0019 1.164200e+00  1.0431 1.299300e+00 0.0067      True          False     0.200     0.200
+  Dam__HEAD NORMAL COORDINATE Y AXIS(Stage1)  0.0612 0.0010 1.001442e+02  0.0000 5.766069e+12 0.7156     False           True  1271.800  1271.300
+Fill1__HEAD NORMAL COORDINATE Y AXIS(Stage2)  0.0610 0.0010 2.305010e+01  0.0000 1.830474e+33 0.9333     False          False  1322.500  1322.500
+          Dam__Stage2 Circle1 Distance Speed  0.0604 0.0018 1.210200e+00  1.1086 1.321100e+00 0.0000      True           True  5500.000  5500.000
+                        fe_Dam_coord_dev_abs  0.0595 0.0025 1.125000e+00  1.0162 1.245400e+00 0.0232      True           True     5.000     5.000
+                          dev_Dam__X(Stage1)  0.0594 0.0025          NaN     NaN          NaN    NaN       NaN          False     0.300     0.300
+                           fe_Dam_speed_mean  0.0591 0.0025          NaN     NaN          NaN    NaN       NaN           True  6100.000  6100.000
+Fill2__HEAD NORMAL COORDINATE X AXIS(Stage3)  0.0586 0.0009          NaN     NaN          NaN    NaN       NaN          False   694.000   692.800
+Fill2__HEAD NORMAL COORDINATE Z AXIS(Stage1) -0.0580 0.0009          NaN     NaN          NaN    NaN       NaN          False   243.500   243.500
+                            fe_Dam_cure_dist -0.0580 0.0009          NaN     NaN          NaN    NaN       NaN          False   720.000   720.000
+fe_wo_span_h {'risk_values': [4.833, 5.75, 6.75, 9.416, 13.666, 17.083, 19.166, 21.166], 'safe_values': [0.416, 1.0, 1.417, 1.833, 1303.75]}
+fe_wo_rank {'risk_values': [0.032, 0.283, 0.333, 0.38, 0.431, 0.482, 0.53, 0.582, 0.633, 0.679], 'safe_values': [0.179, 0.728, 0.78, 0.828, 0.877, 0.975]}
+fe_tact_Dam_Fill1_diff {'risk_values': [-19.851, -1.25, 2.1, 17.375, 64.125], 'safe_values': [0.25, 0.4, 0.55, 13.55, 15.35]}
+fe_qty_ratio {'risk_values': [0.067, 0.775, 3.369, 4.166], 'safe_values': [0.319, 1.208, 2.084, 2.823]}
+fe_wo_size {'risk_values': [20.5, 82.5, 93.5], 'safe_values': [235.5, 238.5, 239.5]}
+fe_weekday {'risk_values': [0.0, 3.0], 'safe_values': [1.0]}
+fe_AC_PxT_total {'risk_values': [133.074, 133.47, 133.833, 134.256], 'safe_values': [135.067, 135.399, 171.574, 172.781]}
+fe_AC_P3_minus_P1 {'risk_values': [0.189, 0.198, 0.199, 0.224, 0.428], 'safe_values': [0.087, 0.184, 0.194]}
+Fill1__Machine Tact time {'risk_values': [57.8, 58.95, 63.1, 68.15, 71.15, 82.4], 'safe_values': [52.975, 56.25, 56.5, 56.9]}
+AutoClave__Chamber Temp. {'risk_values': [51.0, 52.0, 53.0], 'safe_values': [56.0, 57.0]}

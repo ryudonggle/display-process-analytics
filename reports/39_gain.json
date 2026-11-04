@@ -1,0 +1,74 @@
+{
+ "products_per_year": 57867,
+ "defect_rate": 0.058,
+ "defects_per_year": 3357,
+ "prices_10k_won": [
+  30,
+  60,
+  120
+ ],
+ "causes": [
+  {
+   "cause": "Seg 구간 노즐 위치 보정",
+   "extra_good_units": 589,
+   "yield_gain_pp": 1.02,
+   "how": "이미 얻은 이득 (2023년 9월 보정) · 재발 감시로 유지",
+   "gain_100m_won": {
+    "30": 1.77,
+    "60": 3.53,
+    "120": 7.06
+   }
+  },
+  {
+   "cause": "탈포기 1 ~ 3개만 넣고 돌리기 방지",
+   "extra_good_units": 118,
+   "yield_gain_pp": 0.2,
+   "how": "최소 투입 수량 기준",
+   "gain_100m_won": {
+    "30": 0.35,
+    "60": 0.71,
+    "120": 1.42
+   }
+  },
+  {
+   "cause": "탈포기 4 ~ 9개만 넣고 돌리기 방지",
+   "extra_good_units": 124,
+   "yield_gain_pp": 0.21,
+   "how": "배치 채워서 돌리기",
+   "gain_100m_won": {
+    "30": 0.37,
+    "60": 0.74,
+    "120": 1.49
+   }
+  },
+  {
+   "cause": "탈포 챔버 46℃ 이하 방지",
+   "extra_good_units": 21,
+   "yield_gain_pp": 0.04,
+   "how": "온도 하한 47℃",
+   "gain_100m_won": {
+    "30": 0.06,
+    "60": 0.13,
+    "120": 0.25
+   }
+  }
+ ],
+ "total": {
+  "extra_good_units": 852,
+  "yield_gain_pp": 1.47,
+  "gain_100m_won": {
+   "30": 2.56,
+   "60": 5.11,
+   "120": 10.22
+  }
+ },
+ "future_only": {
+  "extra_good_units": 263,
+  "yield_gain_pp": 0.45,
+  "gain_100m_won": {
+   "30": 0.79,
+   "60": 1.58,
+   "120": 3.16
+  }
+ }
+}

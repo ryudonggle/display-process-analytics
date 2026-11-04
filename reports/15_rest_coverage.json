@@ -1,0 +1,15 @@
+{
+ "confirmed": [
+  "Dam Y(Stage2) 음수 편차 < -0.05",
+  "Dam Head Zero Y > 300",
+  "작업지시 생산 기간 > 24시간",
+  "탈포 챔버 ≤ 46℃",
+  "Dam 60분+ 정지 후 재가동"
+ ],
+ "share_rows": 0.3554,
+ "share_defects": 0.5178,
+ "rate_in": 0.0801,
+ "rate_out": 0.0411,
+ "n_rest": 40374,
+ "defects_rest": 2219
+}

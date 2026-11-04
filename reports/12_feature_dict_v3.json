@@ -1,0 +1,19 @@
+{
+ "v3_chg_speed": "Dam speed 직전 제품 대비 변경",
+ "v3_since_chg_speed": "Dam speed 변경 후 경과 개수",
+ "v3_chg_s2_time": "Dam s2_time 직전 제품 대비 변경",
+ "v3_since_chg_s2_time": "Dam s2_time 변경 후 경과 개수",
+ "v3_chg_y2": "Dam y2 직전 제품 대비 변경",
+ "v3_since_chg_y2": "Dam y2 변경 후 경과 개수",
+ "v3_y2_roll20_mean": "Dam Y2 편차 직전 20개 평균",
+ "v3_y2_roll20_std": "Dam Y2 편차 직전 20개 표준편차",
+ "nb_30": "이웃 라벨(폴드 내 계산)",
+ "nb_120": "이웃 라벨(폴드 내 계산)",
+ "nb_480": "이웃 라벨(폴드 내 계산)",
+ "nbp_120": "이웃 라벨(폴드 내 계산)",
+ "nbp_480": "이웃 라벨(폴드 내 계산)",
+ "nb_prev_y": "이웃 라벨(폴드 내 계산)",
+ "nb_next_y": "이웃 라벨(폴드 내 계산)",
+ "nb_prev_dt": "이웃 라벨(폴드 내 계산)",
+ "nb_ac_batch": "이웃 라벨(폴드 내 계산)"
+}

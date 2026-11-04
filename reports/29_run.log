@@ -1,0 +1,19 @@
+lag leakage check: True
+all_train          base (test 한 행)              PR-AUC 0.1479 lift 3.08 top3 P 0.208 R 0.128
+all_train          B (실시간 로그)                   PR-AUC 0.1497 lift 3.11 top3 P 0.195 R 0.121
+all_train          B + 검사 2h 후                  PR-AUC 0.1489 lift 3.1 top3 P 0.201 R 0.124
+all_train          B + 검사 4h 후                  PR-AUC 0.1485 lift 3.09 top3 P 0.201 R 0.123
+all_train          B + 검사 8h 후                  PR-AUC 0.1513 lift 3.14 top3 P 0.196 R 0.12
+all_train          B + 검사 24h 후                 PR-AUC 0.1506 lift 3.12 top3 P 0.202 R 0.124
+all_train          단순 로지스틱 (견고 조건 15개)          PR-AUC 0.1458 lift 2.99 top3 P 0.197 R 0.12
+all_train          작은 LightGBM (B)              PR-AUC 0.1417 lift 2.93 top3 P 0.206 R 0.127
+sep_known_removed  base (test 한 행)              PR-AUC 0.0934 lift 2.12 top3 P 0.129 R 0.088
+sep_known_removed  B (실시간 로그)                   PR-AUC 0.0911 lift 2.07 top3 P 0.128 R 0.087
+sep_known_removed  B + 검사 2h 후                  PR-AUC 0.0911 lift 2.08 top3 P 0.12 R 0.082
+sep_known_removed  B + 검사 4h 후                  PR-AUC 0.0923 lift 2.1 top3 P 0.124 R 0.085
+sep_known_removed  B + 검사 8h 후                  PR-AUC 0.0914 lift 2.08 top3 P 0.133 R 0.091
+sep_known_removed  B + 검사 24h 후                 PR-AUC 0.0942 lift 2.14 top3 P 0.123 R 0.084
+sep_known_removed  단순 로지스틱 (견고 조건 15개)          PR-AUC 0.0950 lift 2.11 top3 P 0.142 R 0.094
+sep_known_removed  작은 LightGBM (B)              PR-AUC 0.0869 lift 1.98 top3 P 0.134 R 0.09
+
+[exited with code 0]

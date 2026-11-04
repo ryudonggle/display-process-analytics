@@ -1,0 +1,75 @@
+{
+ "format_counts": {
+  "A": 23459,
+  "B": 18234,
+  "C": 16174
+ },
+ "shift_span_Dam": [
+  "HEAD NORMAL COORDINATE X AXIS(Stage1) Collect Result_Dam",
+  "WorkMode Collect Result_Dam",
+  53
+ ],
+ "shift_span_Fill1": [
+  "HEAD NORMAL COORDINATE X AXIS(Stage1) Collect Result_Fill1",
+  "WorkMode Collect Result_Fill1",
+  23
+ ],
+ "shift_span_Fill2": [
+  "HEAD NORMAL COORDINATE X AXIS(Stage1) Collect Result_Fill2",
+  "WorkMode Collect Result_Fill2",
+  23
+ ],
+ "drop_all_null": 287,
+ "drop_const": 42,
+ "drop_duplicate": [
+  "CURE START POSITION Θ Collect Result_Dam",
+  "HEAD NORMAL COORDINATE Z AXIS(Stage2) Collect Result_Dam",
+  "HEAD NORMAL COORDINATE Z AXIS(Stage3) Collect Result_Dam",
+  "Stage1 Circle2 Distance Speed Collect Result_Dam",
+  "Stage1 Circle3 Distance Speed Collect Result_Dam",
+  "Stage1 Circle4 Distance Speed Collect Result_Dam",
+  "Stage1 Line2 Distance Speed Collect Result_Dam",
+  "Stage1 Line4 Distance Speed Collect Result_Dam",
+  "Stage2 Circle2 Distance Speed Collect Result_Dam",
+  "Stage2 Circle3 Distance Speed Collect Result_Dam",
+  "Stage2 Circle4 Distance Speed Collect Result_Dam",
+  "Stage2 Line4 Distance Speed Collect Result_Dam",
+  "Stage3 Circle2 Distance Speed Collect Result_Dam",
+  "Stage3 Circle3 Distance Speed Collect Result_Dam",
+  "Stage3 Circle4 Distance Speed Collect Result_Dam",
+  "Stage3 Line2 Distance Speed Collect Result_Dam",
+  "Stage3 Line4 Distance Speed Collect Result_Dam",
+  "CURE START POSITION Z Collect Result_Fill2",
+  "HEAD NORMAL COORDINATE Y AXIS(Stage3) Collect Result_Fill2",
+  "HEAD NORMAL COORDINATE Z AXIS(Stage2) Collect Result_Fill2",
+  "HEAD NORMAL COORDINATE Z AXIS(Stage3) Collect Result_Fill2"
+ ],
+ "post_shift_median_check": {
+  "Dam__HEAD NORMAL COORDINATE X AXIS(Stage1)": {
+   "A": 549.0,
+   "B": 550.3,
+   "C": 548.9
+  },
+  "Dam__HEAD NORMAL COORDINATE X AXIS(Stage2)": {
+   "A": 463.0,
+   "B": 465.5,
+   "C": 463.9
+  },
+  "Dam__HEAD NORMAL COORDINATE Y AXIS(Stage1)": {
+   "A": 377.5,
+   "B": 384.0,
+   "C": 377.6
+  },
+  "Fill1__HEAD NORMAL COORDINATE X AXIS(Stage1)": {
+   "A": 837.9,
+   "B": 838.1,
+   "C": 837.9
+  }
+ },
+ "final_shape": [
+  57867,
+  100
+ ],
+ "n_measure_cols": 85,
+ "measure_null_rate": {}
+}

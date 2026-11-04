@@ -1,0 +1,543 @@
+<title>합착 라인 불량 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* 레이아웃: 위에는 라인 전체를 가로지르는 공정 도면(움직이는 패널), 아래에는 선택한 공정의 원인 카드 */
+:root {
+  --bg: #F2F5F7;
+  --surface: #FFFFFF;
+  --ink: #15222B;
+  --muted: #5B6B75;
+  --line: #D3DCE1;
+  --glass: #CDEBEF;
+  --glass-edge: #8FC5CD;
+  --accent: #0E6A85;
+  --crit: #C8402C;
+  --warn: #C98A12;
+  --ok: #2F8A62;
+  --na: #9AA7AE;
+  --crit-soft: #F7DED9;
+  --warn-soft: #F6EAD0;
+  --ok-soft: #DCEFE5;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F171C; --surface: #172229; --ink: #E4ECEF; --muted: #93A4AD; --line: #2A3A43;
+    --glass: #1F4F58; --glass-edge: #4E97A3; --accent: #5BB8D2;
+    --crit: #F06A52; --warn: #E9B04A; --ok: #5FC08F; --na: #5F6E76;
+    --crit-soft: #3D2320; --warn-soft: #3A3020; --ok-soft: #1D3529;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F171C; --surface: #172229; --ink: #E4ECEF; --muted: #93A4AD; --line: #2A3A43;
+  --glass: #1F4F58; --glass-edge: #4E97A3; --accent: #5BB8D2;
+  --crit: #F06A52; --warn: #E9B04A; --ok: #5FC08F; --na: #5F6E76;
+  --crit-soft: #3D2320; --warn-soft: #3A3020; --ok-soft: #1D3529;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 22px; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; }
+h1 { margin: 0; font-size: clamp(1.5rem, 3.2vw, 2.1rem); font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+.lede { margin: 4px 0 0; color: var(--muted); max-width: 62ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { border: 0; background: transparent; color: var(--muted); font: 500 0.85rem var(--font-body); padding: 7px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.btn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 0.85rem var(--font-body); padding: 7px 12px; border-radius: 8px; cursor: pointer; }
+button:focus-visible, .station:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.floor { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 10px; }
+.floor-scroll { overflow-x: auto; }
+.floor svg { display: block; width: 100%; min-width: 820px; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: var(--muted); padding: 8px 4px 0; align-items: center; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.counter { margin-left: auto; font-family: var(--font-data); font-variant-numeric: tabular-nums; color: var(--ink); }
+
+.station { cursor: pointer; }
+.station .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.5; transition: stroke 0.2s; }
+.station:hover .box, .station.sel .box { stroke: var(--accent); stroke-width: 2.5; }
+.station text { fill: var(--ink); font-family: var(--font-body); }
+.station .sub { fill: var(--muted); font-size: 11px; }
+.station.na .box { stroke-dasharray: 5 4; }
+.pulse { transform-box: fill-box; transform-origin: center; animation: pulse 1.8s ease-out infinite; }
+@keyframes pulse { 0% { opacity: 0.55; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
+@media (prefers-reduced-motion: reduce) { .pulse { animation: none; opacity: 0; } }
+
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.detail h2 { margin: 2px 0 2px; font-size: 1.35rem; }
+.detail .meta { color: var(--muted); font-size: 0.88rem; margin: 0 0 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
+.chip { font-size: 0.78rem; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.cause { border-top: 1px solid var(--line); padding: 14px 0 4px; display: grid; gap: 8px; }
+.cause-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.cause-head strong { font-size: 1rem; }
+.verdict { font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+.v-crit { background: var(--crit-soft); color: var(--crit); }
+.v-warn { background: var(--warn-soft); color: var(--warn); }
+.v-ok { background: var(--ok-soft); color: var(--ok); }
+.cause p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.bars { display: grid; grid-template-columns: 4.6em 1fr 3.4em; gap: 4px 10px; align-items: center; font-size: 0.8rem; }
+.bars span.lab { color: var(--muted); }
+.bars span.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; text-align: right; }
+.track { height: 10px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.track b { display: block; height: 100%; border-radius: 3px; }
+.big { font-family: var(--font-data); font-size: 2.6rem; font-weight: 600; color: var(--crit); line-height: 1.1; }
+.empty { color: var(--muted); font-size: 0.92rem; border-top: 1px solid var(--line); padding-top: 14px; }
+
+.types { display: grid; gap: 14px; }
+.type { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: center; }
+.type svg { width: 120px; height: auto; }
+.type h3 { margin: 0; font-size: 0.98rem; }
+.type p { margin: 2px 0 0; font-size: 0.85rem; color: var(--muted); }
+.note { font-size: 0.8rem; color: var(--muted); }
+.cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px; }
+.cover div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.cover b { display: block; font-family: var(--font-data); font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.cover span { font-size: 0.8rem; color: var(--muted); }
+footer { font-size: 0.78rem; color: var(--muted); }
+
+.sim h2 { margin: 2px 0; font-size: 1.35rem; }
+.sim-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: start; gap: 12px; }
+.sim-head .meta { max-width: 60ch; color: var(--muted); font-size: 0.88rem; margin: 0; }
+.sim-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin: 18px 0 10px; }
+@media (max-width: 760px) { .sim-body { grid-template-columns: 1fr; } }
+.inputs { display: grid; gap: 14px; }
+.rng { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 0.9rem; }
+.rng em { font-style: normal; color: var(--muted); font-size: 0.78rem; }
+.rng output { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 0.85rem; }
+.rng output.hot { color: var(--crit); font-weight: 600; }
+.rng input { grid-column: 1 / -1; width: 100%; accent-color: var(--accent); }
+.checks { display: grid; gap: 6px; font-size: 0.9rem; }
+.checks input { accent-color: var(--accent); margin-right: 6px; }
+.gauge { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.prob { font-family: var(--font-data); font-size: 3.2rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.risk { font-weight: 700; font-size: 0.85rem; padding: 3px 10px; border-radius: 6px; }
+.track.wide { position: relative; height: 14px; margin: 14px 0 6px; overflow: visible; }
+.track.wide b { transition: width 0.25s; }
+.track.wide i { position: absolute; top: -4px; width: 2px; height: 22px; background: var(--ink); }
+.factors { display: grid; gap: 6px; margin: 12px 0; }
+.factor { display: flex; justify-content: space-between; gap: 10px; font-size: 0.88rem; border-bottom: 1px dashed var(--line); padding-bottom: 4px; }
+.factor b { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.evidence h2 { margin: 2px 0; font-size: 1.35rem; text-wrap: balance; }
+.evidence .meta { color: var(--muted); font-size: 0.88rem; margin: 0 0 10px; max-width: 70ch; }
+.evidence svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.evidence svg text { font-family: var(--font-body); }
+.fixbars { display: grid; grid-template-columns: minmax(9em, auto) 1fr 6em; gap: 6px 12px; align-items: center; margin: 10px 0; font-size: 0.88rem; }
+.fixbars .num { font-family: var(--font-data); font-variant-numeric: tabular-nums; text-align: right; }
+.fixbars .track { height: 14px; }
+.fixbars .total { font-weight: 700; border-top: 1px solid var(--line); padding-top: 6px; }
+.action { font-size: 0.9rem; margin: 0; padding: 10px 12px; border-radius: 8px; background: var(--bg); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Sub Assembly Line · 디스플레이 합착 공정</div>
+      <h1>어느 공정에서 불량이 생기나</h1>
+      <p class="lede">제품 40,506건의 공정 로그를 분석해 찾은 원인을 실제 공정 순서 위에 표시했어요. 공정을 누르면 원인과 레시피별 불량률이 나와요.</p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="레시피 선택">
+        <button id="r-old" type="button" aria-pressed="false">구 레시피 <small>~2023.10</small></button>
+        <button id="r-new" type="button" aria-pressed="true">신 레시피 <small>현재</small></button>
+      </div>
+      <button id="play" class="btn" type="button">일시정지</button>
+    </div>
+  </header>
+
+  <section class="floor" aria-label="공정 도면">
+    <div class="floor-scroll"><svg id="svg" viewBox="0 0 1200 310" role="img" aria-label="외측 도포부터 검사까지 공정 흐름과 원인 지점"></svg></div>
+    <div class="legend">
+      <span><i style="background:var(--crit)"></i>확정 원인 (불량률 2배 이상)</span>
+      <span><i style="background:var(--warn)"></i>확정 원인 (영향 중간)</span>
+      <span><i style="background:var(--ok)"></i>이 레시피에서는 원인 아님</span>
+      <span><i style="background:var(--na)"></i>로그 없음</span>
+      <span class="counter" id="counter">생산 0 · 불량 0</span>
+    </div>
+  </section>
+
+  <section class="card sim" aria-labelledby="sim-h">
+    <div class="sim-head">
+      <div>
+        <div class="eyebrow">공정 조건 시뮬레이터</div>
+        <h2 id="sim-h">이 조건이면 불량 확률은?</h2>
+        <p class="meta">공정 로그에 남는 값만 넣으면, 실제 데이터 40,374건으로 학습한 예측식이 불량 확률을 계산해요. 레시피는 위쪽 선택을 따라가요.</p>
+      </div>
+      <div class="seg" role="group" aria-label="예시 조건">
+        <button type="button" data-preset="normal">정상 조건</button>
+        <button type="button" data-preset="align">Y 정렬 이상</button>
+        <button type="button" data-preset="restart">재가동 + 저온</button>
+        <button type="button" data-preset="wait">장시간 대기</button>
+      </div>
+    </div>
+    <div class="sim-body">
+      <div class="inputs">
+        <label class="rng" for="in-y"><span>외측 도포 헤드 Y 편차 <em>Stage2</em></span><output id="o-y"></output>
+          <input id="in-y" type="range" min="-0.5" max="0.5" step="0.05" value="0"></label>
+        <label class="rng" for="in-speed"><span>외측 도포 헤드 이동속도</span><output id="o-speed"></output>
+          <input id="in-speed" type="range" min="3000" max="12000" step="100" value="5000"></label>
+        <label class="rng" for="in-temp"><span>탈포 챔버 온도</span><output id="o-temp"></output>
+          <input id="in-temp" type="range" min="40" max="58" step="1" value="52"></label>
+        <label class="rng" for="in-lead"><span>외측 도포 → 탈포 경과 시간</span><output id="o-lead"></output>
+          <input id="in-lead" type="range" min="10" max="240" step="5" value="30"></label>
+        <div class="checks">
+          <label for="in-restart"><input id="in-restart" type="checkbox"> 60분 넘게 멈췄다가 재가동한 직후</label>
+          <label for="in-longwo"><input id="in-longwo" type="checkbox"> 작업지시가 24시간 넘게 이어지는 중</label>
+          <label for="in-pxx"><input id="in-pxx" type="checkbox"> 시험 생산(PXX) 작업지시</label>
+        </div>
+      </div>
+      <div class="result">
+        <div class="gauge"><div class="prob" id="prob">–</div><div class="risk" id="risk"></div></div>
+        <div class="track wide"><b id="probbar"></b><i id="avgmark" title="레시피 평균"></i></div>
+        <p class="meta" id="avgtxt"></p>
+        <div id="factors" class="factors"></div>
+        <p class="action" id="action"></p>
+      </div>
+    </div>
+    <p class="note">예측식은 원인 검증에서 확정된 조건만 쓴 로지스틱 회귀예요(ROC-AUC 0.61). 설명하기 쉬운 대신, 200개 넘는 변수를 쓰는 LightGBM(0.70)보다 정확도는 낮아요. 경과 시간 2시간 초과는 103건 중 102건이 불량이라 99%로 고정했어요.</p>
+  </section>
+
+  <section class="card evidence" aria-labelledby="ev-h">
+    <div class="eyebrow">결정적 증거</div>
+    <h2 id="ev-h">헤드 좌표를 보정할 때마다 불량률이 절반으로</h2>
+    <p class="meta">두 설비가 서로 다른 시점에 외측 도포 헤드 Y 좌표를 보정했어요. 둘 다 레시피 변경 전이라, 레시피 효과가 아니라 좌표 효과예요. 선은 3주 이동평균, 점은 주별 불량률(크기 = 생산량)이에요.</p>
+    <div class="floor-scroll"><svg id="ev" viewBox="0 0 1100 340" role="img" aria-label="설비별 주간 불량률과 좌표 보정 시점"></svg></div>
+    <div class="fix">
+      <div class="eyebrow" style="margin-top:6px">고치면 줄어드는 불량 (전체 2,350건 중 추정)</div>
+      <div id="fixbars" class="fixbars"></div>
+      <p class="note">라인 변경(34건 모두 불량)과 장기 작업지시는 불량의 결과일 가능성이 커서 뺐어요. 추정치는 원인 구간 불량률이 기준 수준으로 내려간다는 가정이에요.</p>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="card detail" id="detail" aria-live="polite"></section>
+    <aside class="card">
+      <div class="eyebrow">검사에서 보이는 불량 유형</div>
+      <div class="types" style="margin-top:12px">
+        <div class="type">
+          <svg viewBox="0 0 120 50" aria-hidden="true"><rect x="2" y="6" width="116" height="38" rx="6" fill="var(--glass)" stroke="var(--glass-edge)"/><rect x="10" y="13" width="44" height="24" rx="3" fill="var(--surface)" stroke="var(--glass-edge)"/><rect x="66" y="13" width="44" height="24" rx="3" fill="var(--surface)" stroke="var(--glass-edge)"/><circle cx="46" cy="19" r="3.5" fill="var(--bg)" stroke="var(--crit)"/><circle cx="80" cy="29" r="3" fill="var(--bg)" stroke="var(--crit)"/><circle cx="98" cy="20" r="3.5" fill="var(--bg)" stroke="var(--crit)"/></svg>
+          <div><h3>기포</h3><p>관련 원인(추정): 반경화 후 장시간 대기, 탈포 챔버 저온, 가벽(Dam) 경계 흐트러짐</p></div>
+        </div>
+        <div class="type">
+          <svg viewBox="0 0 120 50" aria-hidden="true"><rect x="2" y="6" width="116" height="38" rx="6" fill="var(--glass)" stroke="var(--glass-edge)"/><rect x="10" y="13" width="44" height="24" rx="3" fill="var(--surface)" stroke="var(--glass-edge)"/><rect x="66" y="15" width="44" height="24" rx="3" fill="var(--surface)" stroke="var(--crit)" transform="rotate(-9 88 27)"/></svg>
+          <div><h3>Misalignment</h3><p>관련 원인(추정): 외측 도포 헤드 Y 정렬 이상</p></div>
+        </div>
+        <div class="type">
+          <svg viewBox="0 0 120 50" aria-hidden="true"><rect x="2" y="6" width="116" height="38" rx="6" fill="var(--glass)" stroke="var(--glass-edge)"/><rect x="10" y="13" width="44" height="24" rx="3" fill="var(--surface)" stroke="var(--glass-edge)"/><rect x="66" y="13" width="44" height="24" rx="3" fill="var(--surface)" stroke="var(--glass-edge)"/><path d="M60 8 L57 18 L62 24 L58 34 L61 42" fill="none" stroke="var(--crit)" stroke-width="1.8"/></svg>
+          <div><h3>Crack</h3><p>이 데이터로는 원인을 특정하지 못함</p></div>
+        </div>
+      </div>
+      <p class="note">데이터의 검사 결과는 정상/불량만 기록되어 있어요. 원인과 불량 유형의 연결은 공정 구조에서 추정한 것이에요.</p>
+      <div class="eyebrow" style="margin-top:18px">확정 원인이 설명하는 범위</div>
+      <div class="cover">
+        <div><b>51.8%</b><span>규칙 밖 불량 중 확정 원인 구간에 몰린 비중</span></div>
+        <div><b>8.0% · 4.1%</b><span>원인 해당 제품 · 비해당 제품 불량률</span></div>
+      </div>
+      <p class="note">나머지 절반은 기록된 변수로 설명되지 않아요. UV 실제 조사량, 레진 로트, 온습도가 다음 수집 대상이에요.</p>
+    </aside>
+  </div>
+
+  <footer>LG Aimers 5기 해커톤 데이터 분석 결과 · 학습 데이터 40,506건, 2023.05 ~ 2024.04. 원인 판정은 규칙(2시간 초과 대기·라인 변경) 해당 132건을 뺀 40,374건에서 구·신 레시피 각각과 월별 통제 후 모두 유의한 경우만 "확정"으로 표시했어요. 움직이는 패널은 측정된 조건별 불량률로 만든 예시 흐름이에요. 2시간 초과 대기 패널은 화면에서 보이도록 실제(0.25%)보다 자주(1.2%) 나오게 했고, 아래 생산·불량 카운터도 이 예시 기준이에요.</footer>
+</div>
+
+<script>
+const S = {
+  dam: { x: 95, name: '외측 도포', sub: 'Dam · 가벽 Resin', shap: 33.9, sev: { old: 'crit', new: 'crit' },
+    vars: ['토출량 · 토출 시간', '헤드 이동속도', '헤드 좌표 X · Y · Z', '헤드 원점 위치'],
+    causes: [
+      { t: '헤드 Y 정렬 이상', d: 'Stage2 Y 좌표가 기준보다 0.05 이상 작음. 설비 1은 2023-07(377.0 → 377.3), 설비 2는 2023-08~09(1268.4 → 1270.7)에 좌표를 보정했고, 두 번 모두 직후 불량률이 절반으로 떨어졌어요(8.2 → 6.1%, 9.4 → 4.3%).', old: [8.5, 4.3], new: [13.4, 4.2], v: '확정' },
+      { t: '60분 이상 정지 후 재가동', d: '같은 설비에서 직전 제품과 60분 넘게 간격이 벌어진 뒤 처음 들어온 제품', old: [12.4, 6.8], new: [8.6, 4.5], v: '확정' },
+      { t: '헤드 이동속도 6,000 초과', d: '구 레시피에서는 불량률 2배였지만, 신 레시피에서는 차이가 없어요.', old: [7.3, 3.1], new: [4.6, 4.5], v: '구 레시피 한정' },
+      { t: 'Stage2 토출 시간 6초 미만', d: '가벽이 얇아지는 조건. 신 레시피에서는 유의하지 않아요(p = 0.06).', old: [7.2, 3.4], new: [6.4, 4.5], v: '구 레시피 한정' },
+    ] },
+  fill1: { x: 220, name: '내측 도포', sub: 'Fill1 · 내측 Resin', shap: 19.9, sev: { old: 'warn', new: 'ok' },
+    vars: ['토출량 · 토출 시간', '헤드 좌표 X · Y · Z'],
+    causes: [
+      { t: 'Stage2 토출량 상위 20%', d: '레진을 많이 채운 제품. 신 레시피에서는 차이가 없어요.', old: [9.1, 5.9], new: [5.2, 4.5], v: '구 레시피 한정' },
+      { t: 'X(Stage2) 좌표 편차', d: '내측 헤드 X 좌표가 기준에서 벗어남', old: [9.2, 5.6], new: [4.5, 4.5], v: '구 레시피 한정' },
+    ] },
+  fill2: { x: 345, name: 'UV 경화', sub: 'Fill2 · 반경화', shap: 3.5, sev: { old: 'ok', new: 'ok' },
+    vars: ['경화 위치', '경화 속도 · 시간'],
+    empty: '확정된 원인이 없어요. 경화 위치와 시간 설정만 기록되고 실제 UV 조사량은 없어서, 판단에 한계가 있어요.' },
+  wait: { x: 488, name: '대기', sub: '반경화 → 탈포', sev: { old: 'crit', new: 'crit' }, vars: ['공정 간 경과 시간'],
+    special: { big: '102 / 103', cap: 'Dam 도포부터 탈포까지 2시간 넘게 걸린 제품 중 불량. 정상 흐름은 약 30분이에요.',
+      d: '반경화된 레진이 오래 놓이면서 변질된 채 합착되는 것으로 추정해요. 모델 없이 "반경화 후 2시간 내 탈포 투입" 인터락만으로 막을 수 있어요.' } },
+  bond: { x: 628, name: '합착', sub: 'Glass 접합', na: true, vars: [],
+    empty: '이 데이터에는 합착 공정 로그가 없어요. 강의자료 기준으로 합착 Gap, 평탄도, 공정 온습도가 측정되는 공정이에요.' },
+  ac: { x: 772, name: '탈포', sub: 'AutoClave · 진공 챔버', shap: 14.9, sev: { old: 'warn', new: 'warn' },
+    vars: ['1 ~ 3차 압력 · 시간', '챔버 온도'],
+    causes: [
+      { t: '챔버 온도 46℃ 이하', d: '레진 점도가 올라가 미세 기포가 덜 빠지는 조건으로 추정해요. 해당 제품은 516건으로 적어요.', old: [15.2, 6.8], new: [8.6, 4.5], v: '확정' },
+      { t: '탈포 총시간 하위 20%', d: '구 레시피는 53건뿐이고, 신 레시피 차이는 작아요(p = 0.02).', old: [49.1, 6.8], new: [5.2, 4.4], v: '약함' },
+    ] },
+  cure: { x: 916, name: '완전 경화', sub: 'UV 경화 2차', na: true, vars: [],
+    empty: '이 데이터에는 완전 경화 공정 로그가 없어요.' },
+  insp: { x: 1060, name: '검사', sub: '정상 / 불량 판정', sev: { old: 'none', new: 'none' }, vars: [],
+    ops: true },
+};
+const OPS = [
+  { t: '작업지시가 24시간 넘게 이어짐', d: '중단과 재개가 반복된 작업지시', old: [11.2, 6.5], new: [6.8, 4.3], v: '확정' },
+  { t: '시험 생산 (PXX 작업지시)', d: '구 레시피는 23건뿐이라 판단하지 않았어요.', old: null, new: [19.0, 4.3], v: '확정' },
+  { t: '작업지시 착수 첫 10%', d: '셋업 직후 생산. 신 레시피에서는 차이가 작아요.', old: [8.7, 6.7], new: [4.9, 4.5], v: '구 레시피 한정' },
+];
+
+let recipe = 'new', sel = 'dam', running = true;
+try { const r = localStorage.getItem('lg5-recipe'); if (r === 'old' || r === 'new') recipe = r; } catch (e) {}
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svg');
+const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+const sevColor = s => ({ crit: 'var(--crit)', warn: 'var(--warn)', ok: 'var(--ok)', none: 'var(--accent)' })[s] || 'var(--na)';
+
+// ── 도면 ──
+const BELT = 250;
+el('rect', { x: 20, y: BELT, width: 1160, height: 8, rx: 4, fill: 'var(--line)' }, svg);
+for (let x = 30; x < 1180; x += 26) el('circle', { cx: x, cy: BELT + 4, r: 2, fill: 'var(--bg)' }, svg);
+// 공정 구간 라벨 (강의자료의 5단계)
+[['Resin 도포 & 반경화', 35, 405], ['합착', 570, 690], ['탈포', 710, 835], ['완전 경화', 855, 980], ['검사', 1000, 1120]].forEach(([t, a, b]) => {
+  el('path', { d: `M${a} 22 H${b - 10} L${b} 32 L${b - 10} 42 H${a} Z`, fill: 'var(--bg)', stroke: 'var(--line)' }, svg);
+  const tx = el('text', { x: (a + b) / 2, y: 37, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--muted)', 'font-family': 'var(--font-body)' }, svg); tx.textContent = t;
+});
+const stationEls = {};
+for (const [id, s] of Object.entries(S)) {
+  const g = el('g', { class: 'station' + (s.na ? ' na' : ''), tabindex: 0, role: 'button', 'aria-label': `${s.name} 원인 보기` }, svg);
+  const w = id === 'wait' ? 96 : 110;
+  el('rect', { class: 'box', x: s.x - w / 2, y: 70, width: w, height: 128, rx: 10 }, g);
+  glyph(id, s.x, g);
+  const t1 = el('text', { x: s.x, y: 176, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700 }, g); t1.textContent = s.name;
+  const t2 = el('text', { x: s.x, y: 191, 'text-anchor': 'middle', class: 'sub' }, g); t2.textContent = s.sub;
+  if (s.shap) { const t3 = el('text', { x: s.x - w / 2 + 8, y: 86, class: 'sub', 'font-family': 'var(--font-data)' }, g); t3.textContent = `기여 ${s.shap}%`; }
+  const hx = s.x + w / 2 - 12, hy = 82;
+  const ring = el('circle', { cx: hx, cy: hy, r: 7, class: 'pulse' }, g);
+  const dot = el('circle', { cx: hx, cy: hy, r: 6 }, g);
+  stationEls[id] = { g, ring, dot };
+  g.addEventListener('click', () => select(id));
+  g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id); } });
+}
+function glyph(id, x, g) {
+  const y = 128, st = { fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.6 };
+  if (id === 'dam' || id === 'fill1') {
+    el('rect', { x: x - 26, y: y - 10, width: 52, height: 30, rx: 4, fill: 'var(--glass)', stroke: 'var(--glass-edge)' }, g);
+    if (id === 'dam') el('rect', { x: x - 20, y: y - 5, width: 40, height: 20, rx: 2, fill: 'none', stroke: 'var(--warn)', 'stroke-width': 3 }, g);
+    else for (let i = -15; i <= 15; i += 6) el('line', { x1: x + i, y1: y - 4, x2: x + i, y2: y + 14, stroke: 'var(--warn)', 'stroke-width': 2.5 }, g);
+    el('rect', { x: x - 6, y: y - 34, width: 12, height: 18, rx: 2, ...st }, g);
+    el('path', { d: `M${x - 3} ${y - 16} L${x} ${y - 11} L${x + 3} ${y - 16}`, ...st }, g);
+  } else if (id === 'fill2' || id === 'cure') {
+    el('rect', { x: x - 24, y: y - 34, width: 48, height: 8, rx: 2, fill: 'var(--accent)' }, g);
+    for (let i = -18; i <= 18; i += 9) el('line', { x1: x + i, y1: y - 22, x2: x + i, y2: y - 2, stroke: 'var(--accent)', 'stroke-dasharray': '3 3', 'stroke-width': 1.4 }, g);
+    el('rect', { x: x - 28, y: y + 2, width: 56, height: 12, rx: 3, fill: 'var(--glass)', stroke: 'var(--glass-edge)' }, g);
+  } else if (id === 'wait') {
+    el('circle', { cx: x, cy: y - 6, r: 18, ...st }, g);
+    el('path', { d: `M${x} ${y - 18} V${y - 6} L${x + 9} ${y}`, ...st }, g);
+    const t = el('text', { x, y: y + 28, 'text-anchor': 'middle', 'font-size': 11, 'font-family': 'var(--font-data)', fill: 'var(--crit)' }, g); t.textContent = '> 2h';
+  } else if (id === 'bond') {
+    el('rect', { x: x - 30, y: y - 26, width: 60, height: 7, rx: 2, fill: 'var(--glass)', stroke: 'var(--glass-edge)' }, g);
+    for (const dx of [-16, 0, 16]) el('path', { d: `M${x + dx} ${y - 16} V${y - 2} M${x + dx - 4} ${y - 6} L${x + dx} ${y - 1} L${x + dx + 4} ${y - 6}`, ...st }, g);
+    el('rect', { x: x - 30, y: y + 2, width: 26, height: 8, rx: 2, fill: 'var(--surface)', stroke: 'var(--glass-edge)' }, g);
+    el('rect', { x: x + 4, y: y + 2, width: 26, height: 8, rx: 2, fill: 'var(--surface)', stroke: 'var(--glass-edge)' }, g);
+  } else if (id === 'ac') {
+    el('rect', { x: x - 34, y: y - 34, width: 68, height: 52, rx: 4, fill: 'none', stroke: 'var(--muted)', 'stroke-width': 3 }, g);
+    el('rect', { x: x - 26, y: y + 2, width: 52, height: 9, rx: 2, fill: 'var(--glass)', stroke: 'var(--glass-edge)' }, g);
+    for (const [cx, cy, r] of [[-12, -16, 3], [4, -22, 2.5], [14, -10, 3]]) el('circle', { cx: x + cx, cy: y + cy, r, fill: 'none', stroke: 'var(--accent)' }, g);
+  } else if (id === 'insp') {
+    el('circle', { cx: x - 6, cy: y - 12, r: 15, ...st, 'stroke-width': 2.4 }, g);
+    el('line', { x1: x + 5, y1: y - 1, x2: x + 18, y2: y + 12, stroke: 'var(--muted)', 'stroke-width': 4, 'stroke-linecap': 'round' }, g);
+  }
+}
+
+// ── 시뮬레이션 패널 ──
+const P = { // 해당 비율과 불량률 배수 (측정값)
+  old: { target: 0.073, f: { yneg: [0.63, 1.98], speed: [0.906, 2.35], restart: [0.014, 1.82], cold: [0.015, 2.24], longwo: [0.093, 1.72] } },
+  new: { target: 0.048, f: { yneg: [0.033, 3.19], speed: [0.50, 1.0], restart: [0.014, 1.91], cold: [0.011, 1.91], longwo: [0.10, 1.58] } },
+};
+function baseRate(r) { let e = 1; for (const [p, rr] of Object.values(P[r].f)) e *= 1 - p + p * rr; return P[r].target / e; }
+const panels = [], layer = el('g', {}, svg), STOPS = Object.values(S).map(s => s.x);
+let made = 0, bad = 0, last = 0, spawnT = 0;
+function spawn() {
+  const r = recipe, f = P[r].f, a = {};
+  let p = baseRate(r);
+  for (const k in f) { a[k] = Math.random() < f[k][0]; if (a[k]) p *= f[k][1]; }
+  a.wait = Math.random() < 0.012; // 화면에서 보이도록 실제(0.25%)보다 자주 표시
+  if (a.wait) p = 0.99;
+  const g = el('g', {}, layer);
+  const body = el('rect', { x: -22, y: -9, width: 44, height: 16, rx: 3, fill: 'var(--glass)', stroke: 'var(--glass-edge)' }, g);
+  el('rect', { x: -18, y: -6, width: 16, height: 10, rx: 1.5, fill: 'var(--surface)' }, g);
+  const d2 = el('rect', { x: 2, y: -6, width: 16, height: 10, rx: 1.5, fill: 'var(--surface)' }, g);
+  panels.push({ g, body, d2, a, defect: Math.random() < Math.min(p, 0.99), x: 10, stop: 0, wait: 0, done: false });
+}
+function step(dt) {
+  spawnT -= dt; if (spawnT <= 0) { spawn(); spawnT = 1.25; }
+  for (const o of panels) {
+    if (o.wait > 0) { o.wait -= dt; }
+    else {
+      o.x += 110 * dt;
+      if (o.stop < STOPS.length && o.x >= STOPS[o.stop]) {
+        o.x = STOPS[o.stop]; const id = Object.keys(S)[o.stop];
+        o.wait = id === 'wait' ? (o.a.wait ? 3.2 : 0.35) : 0.35;
+        if (id === 'dam' && o.a.yneg) { o.d2.setAttribute('transform', 'translate(1 1) rotate(-10 10 -1)'); o.d2.setAttribute('stroke', 'var(--warn)'); }
+        if (id === 'wait' && o.a.wait) o.body.setAttribute('stroke', 'var(--crit)');
+        if (id === 'insp') { made++; if (o.defect) { bad++; o.body.setAttribute('fill', 'var(--crit-soft)'); o.body.setAttribute('stroke', 'var(--crit)'); } else o.body.setAttribute('stroke', 'var(--ok)'); }
+        o.stop++;
+      }
+    }
+    const lift = o.stop > STOPS.length - 1 && o.defect ? Math.min(30, (o.x - 1060) * 0.6) : 0;
+    o.g.setAttribute('transform', `translate(${o.x} ${BELT - 9 + lift})`);
+    if (o.x > 1190) { o.g.remove(); o.done = true; }
+  }
+  for (let i = panels.length - 1; i >= 0; i--) if (panels[i].done) panels.splice(i, 1);
+  document.getElementById('counter').textContent = `생산 ${made.toLocaleString()} · 불량 ${bad} · 불량률 ${made ? (bad / made * 100).toFixed(1) : '0.0'}%`;
+}
+function loop(t) { const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t; if (running) step(dt); requestAnimationFrame(loop); }
+if (reduce) { running = false; for (let i = 0; i < 9; i++) { spawn(); } panels.forEach((o, i) => { o.x = 40 + i * 125; o.g.setAttribute('transform', `translate(${o.x} ${BELT - 9})`); }); }
+requestAnimationFrame(loop);
+
+// ── 상세 카드 ──
+function bars(pair, max) {
+  if (!pair) return '<p>이 레시피에서는 표본이 부족해요.</p>';
+  const [on, off] = pair, m = max || Math.max(16, on * 1.1);
+  const c = on / off >= 2 ? 'var(--crit)' : on / off >= 1.3 ? 'var(--warn)' : 'var(--na)';
+  return `<div class="bars"><span class="lab">해당</span><div class="track"><b style="width:${on / m * 100}%;background:${c}"></b></div><span class="num">${on}%</span>
+    <span class="lab">기준</span><div class="track"><b style="width:${off / m * 100}%;background:var(--na)"></b></div><span class="num">${off}%</span></div>`;
+}
+function vclass(v, pair) { if (v === '확정') return pair && pair[0] / pair[1] >= 2 ? 'v-crit' : 'v-warn'; return 'v-ok'; }
+function causeHTML(c) {
+  const pair = c[recipe];
+  return `<div class="cause"><div class="cause-head"><strong>${c.t}</strong><span class="verdict ${vclass(c.v, pair)}">${c.v}</span></div>
+    <p>${c.d}</p>${bars(pair, c.t.includes('탈포 총시간') && recipe === 'old' ? 55 : null)}</div>`;
+}
+function select(id) {
+  sel = id; const s = S[id];
+  for (const k in stationEls) stationEls[k].g.classList.toggle('sel', k === id);
+  const rn = recipe === 'old' ? '구 레시피 (2023.05 ~ 10)' : '신 레시피 (2023.10 ~)';
+  let h = `<div class="eyebrow">${s.sub}</div><h2>${s.name}</h2><p class="meta">${rn} 기준 불량률${s.shap ? ` · 모델 판단 기여도 ${s.shap}% (SHAP)` : ''}</p>`;
+  if (s.vars.length) h += `<div class="chips">${s.vars.map(v => `<span class="chip">${v}</span>`).join('')}</div>`;
+  if (s.special) h += `<div class="cause"><div class="big">${s.special.big}</div><p>${s.special.cap}</p><p>${s.special.d}</p></div>
+    <div class="cause"><div class="cause-head"><strong>설비 라인을 바꿔 탄 제품</strong><span class="verdict v-warn">34 / 34 불량 · 결과 추정</span></div><p>불량이라서 재작업 라인으로 간 결과일 가능성이 커요. 원인이라기보다 불량의 신호로 보고, 라인 간 이동품은 별도 판정하세요.</p></div>`;
+  if (s.causes) { const order = [...s.causes].sort((a, b) => (b[recipe] ? b[recipe][0] / b[recipe][1] : 0) - (a[recipe] ? a[recipe][0] / a[recipe][1] : 0)); h += order.map(causeHTML).join(''); }
+  if (s.empty) h += `<p class="empty">${s.empty}</p>`;
+  if (s.ops) h += `<p class="meta" style="margin-top:-6px">전체 불량률 5.8% (40,506건 중 2,350건). 특정 공정이 아니라 작업 운영 방식에서 나온 원인도 있어요.</p>` + OPS.map(causeHTML).join('');
+  document.getElementById('detail').innerHTML = h;
+}
+function setRecipe(r) {
+  recipe = r; try { localStorage.setItem('lg5-recipe', r); } catch (e) {}
+  document.getElementById('r-old').setAttribute('aria-pressed', r === 'old');
+  document.getElementById('r-new').setAttribute('aria-pressed', r === 'new');
+  for (const [id, s] of Object.entries(S)) {
+    const c = s.na ? 'var(--na)' : sevColor(s.sev[r]);
+    stationEls[id].dot.setAttribute('fill', c); stationEls[id].ring.setAttribute('fill', c);
+    stationEls[id].ring.style.display = s.na || ['ok', 'none'].includes(s.sev[r]) ? 'none' : '';
+  }
+  made = 0; bad = 0; select(sel); predict();
+}
+
+// ── 시뮬레이터: 규칙 밖 40,374건으로 학습한 로지스틱 계수 (reports/16_whatif_logit.json) ──
+const B = { const: -3.465, new: 0.256, yneg: 0.63, yneg_new: 0.44, speed_old: 0.391, restart: 0.601, cold: 0.625, longwo: 0.315, pxx: 1.105 };
+const AVG = { old: 7.3, new: 4.8 };
+const $ = id => document.getElementById(id);
+const PRESET = {
+  normal: { y: 0, speed: 5000, temp: 52, lead: 30, restart: false, longwo: false, pxx: false },
+  align: { y: -0.3, speed: 5000, temp: 52, lead: 30, restart: false, longwo: false, pxx: false },
+  restart: { y: 0, speed: 5000, temp: 45, lead: 40, restart: true, longwo: true, pxx: false },
+  wait: { y: 0, speed: 5000, temp: 52, lead: 150, restart: false, longwo: false, pxx: false },
+};
+function predict() {
+  const y = +$('in-y').value, sp = +$('in-speed').value, tp = +$('in-temp').value, ld = +$('in-lead').value;
+  const isNew = recipe === 'new';
+  $('o-y').textContent = (y > 0 ? '+' : '') + y.toFixed(2); $('o-y').classList.toggle('hot', y < -0.05);
+  $('o-speed').textContent = sp.toLocaleString(); $('o-speed').classList.toggle('hot', !isNew && sp > 6000);
+  $('o-temp').textContent = tp + '℃'; $('o-temp').classList.toggle('hot', tp <= 46);
+  $('o-lead').textContent = ld >= 60 ? `${Math.floor(ld / 60)}시간 ${ld % 60}분` : `${ld}분`; $('o-lead').classList.toggle('hot', ld > 120);
+  const on = [];
+  if (y < -0.05) on.push(['헤드 Y 정렬 이상', B.yneg + (isNew ? B.yneg_new : 0), '외측 도포 Stage2 헤드 Y 좌표를 보정값(설비 1: 377.3, 설비 2: 1270.7)으로 맞추고 재발을 감시하세요.']);
+  if (!isNew && sp > 6000) on.push(['헤드 이동속도 6,000 초과 (구 레시피)', B.speed_old, '구 레시피에서는 이동속도를 6,000 이하로 낮추면 위험이 줄어요.']);
+  if (tp <= 46) on.push(['탈포 챔버 46℃ 이하', B.cold, '챔버 온도가 하한 아래예요. 예열 후 투입하세요.']);
+  if ($('in-restart').checked) on.push(['정지 후 재가동 직후', B.restart, '재가동 직후 첫 제품은 강화 검사 대상으로 분류하세요.']);
+  if ($('in-longwo').checked) on.push(['24시간 넘는 작업지시', B.longwo, '중단·재개가 반복되는 작업지시는 분할보다 연속 생산이 유리해요.']);
+  if ($('in-pxx').checked) on.push(['시험 생산', B.pxx, '시험 생산품은 조건이 확립되기 전이라 전수 검사를 권장해요.']);
+  let p;
+  if (ld > 120) p = 0.99;
+  else { const z = B.const + (isNew ? B.new : 0) + on.reduce((s, f) => s + f[1], 0); p = 1 / (1 + Math.exp(-z)); }
+  const pct = p * 100, avg = AVG[recipe];
+  $('prob').textContent = pct >= 10 ? pct.toFixed(0) + '%' : pct.toFixed(1) + '%';
+  const lvl = ld > 120 || pct >= avg * 2 ? ['높음', 'v-crit', 'var(--crit)'] : pct >= avg ? ['주의', 'v-warn', 'var(--warn)'] : ['낮음', 'v-ok', 'var(--ok)'];
+  $('risk').textContent = '위험 ' + lvl[0]; $('risk').className = 'risk ' + lvl[1];
+  $('prob').style.color = lvl[2];
+  const scale = 30; // 막대는 0 ~ 30%
+  $('probbar').style.width = Math.min(100, pct / scale * 100) + '%'; $('probbar').style.background = lvl[2];
+  $('avgmark').style.left = (avg / scale * 100) + '%';
+  $('avgtxt').textContent = `세로선은 ${recipe === 'old' ? '구' : '신'} 레시피 평균 불량률 ${avg}%예요. 막대는 30%까지 표시해요.`;
+  if (ld > 120) {
+    $('factors').innerHTML = `<div class="factor"><span>외측 도포 → 탈포 2시간 초과</span><b>불량 확정 수준</b></div>`;
+    $('action').textContent = '반경화 레진이 오래 놓였어요. 합착 전에 제품을 빼고, 2시간 내 탈포 투입 인터락을 거세요.';
+    return;
+  }
+  $('factors').innerHTML = on.length ? on.map(f => `<div class="factor"><span>${f[0]}</span><b>위험 ×${Math.exp(f[1]).toFixed(2)}</b></div>`).join('')
+    : '<div class="factor"><span>위험을 높이는 조건이 없어요</span><b>기본값</b></div>';
+  const top = on.sort((a, b) => b[1] - a[1])[0];
+  $('action').textContent = top ? top[2] : '현재 조건에서는 별도 조치가 필요 없어요.';
+}
+function applyPreset(k) {
+  const v = PRESET[k];
+  $('in-y').value = v.y; $('in-speed').value = v.speed; $('in-temp').value = v.temp; $('in-lead').value = v.lead;
+  $('in-restart').checked = v.restart; $('in-longwo').checked = v.longwo; $('in-pxx').checked = v.pxx;
+  document.querySelectorAll('[data-preset]').forEach(b => b.setAttribute('aria-pressed', b.dataset.preset === k));
+  predict();
+}
+document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => applyPreset(b.dataset.preset)));
+['in-y', 'in-speed', 'in-temp', 'in-lead', 'in-restart', 'in-longwo', 'in-pxx'].forEach(id => $(id).addEventListener('input', () => {
+  document.querySelectorAll('[data-preset]').forEach(b => b.setAttribute('aria-pressed', 'false')); predict();
+}));
+document.getElementById('r-old').onclick = () => setRecipe('old');
+document.getElementById('r-new').onclick = () => setRecipe('new');
+const pb = document.getElementById('play');
+if (reduce) pb.textContent = '재생';
+pb.onclick = () => { running = !running; pb.textContent = running ? '일시정지' : '재생'; };
+// ── 증거 타임라인 (주별 불량률, reports/16_actionable.md) ──
+const WK = {"1":[["2023-05-01",7.51,253],["2023-05-08",7.42,310],["2023-05-15",6.36,220],["2023-05-22",10.43,968],["2023-05-29",8.24,1541],["2023-06-05",11.49,940],["2023-06-12",9.0,978],["2023-06-19",9.85,1310],["2023-06-26",5.41,777],["2023-07-03",9.05,420],["2023-07-10",8.66,843],["2023-07-17",5.48,821],["2023-07-24",6.14,456],["2023-08-07",6.45,605],["2023-08-14",7.07,99],["2023-08-21",1.69,414],["2023-09-04",3.41,469],["2023-09-11",5.82,464],["2023-09-18",4.09,563],["2023-09-25",4.33,416],["2023-10-02",2.02,494],["2023-10-09",2.87,348],["2023-10-16",4.32,717],["2023-10-23",3.5,343],["2023-10-30",2.75,363],["2023-11-06",3.22,435],["2023-11-13",4.81,728],["2023-11-20",5.17,600],["2023-12-04",3.03,66],["2023-12-11",6.02,565],["2023-12-18",5.39,1020],["2023-12-25",3.7,433]],"2":[["2023-07-17",8.58,338],["2023-07-24",7.44,457],["2023-08-07",13.22,484],["2023-08-14",9.43,106],["2023-08-21",5.14,389],["2023-09-04",5.23,459],["2023-09-11",6.51,430],["2023-09-18",1.66,543],["2023-09-25",4.3,372],["2023-10-02",3.53,482],["2023-10-09",4.49,356],["2023-10-16",8.51,752],["2023-10-23",5.23,344],["2023-10-30",2.79,359],["2023-11-06",3.53,453],["2023-11-13",5.91,727],["2023-11-20",9.83,529],["2023-12-04",1.49,67],["2023-12-11",6.17,583],["2023-12-18",4.81,1061],["2023-12-25",5.65,460]]};
+(function evidence() {
+  const ev = document.getElementById('ev'), L = 50, R = 1080, T = 30, Bm = 300, ymax = 14;
+  const t0 = Date.parse('2023-05-01'), t1 = Date.parse('2024-01-01');
+  const X = d => L + (Date.parse(d) - t0) / (t1 - t0) * (R - L), Yp = v => Bm - v / ymax * (Bm - T);
+  for (let v = 0; v <= 12; v += 4) {
+    el('line', { x1: L, x2: R, y1: Yp(v), y2: Yp(v), stroke: 'var(--line)', 'stroke-width': 1 }, ev);
+    el('text', { x: L - 8, y: Yp(v) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)' }, ev).textContent = v + '%';
+  }
+  ['2023-05', '2023-06', '2023-07', '2023-08', '2023-09', '2023-10', '2023-11', '2023-12'].forEach(m =>
+    el('text', { x: X(m + '-15'), y: Bm + 20, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)' }, ev).textContent = +m.slice(5) + '월');
+  const col = { 1: 'var(--accent)', 2: 'var(--crit)' };
+  [['2023-07-15', 1, '설비 1 좌표 보정', 18], ['2023-08-25', 2, '설비 2 좌표 보정', 36], ['2023-10-01', 0, '레시피 변경', 54]].forEach(([d, e, t, dy]) => {
+    el('line', { x1: X(d), x2: X(d), y1: T - 10, y2: Bm, stroke: col[e] || 'var(--muted)', 'stroke-dasharray': '5 4', 'stroke-width': 1.5 }, ev);
+    el('text', { x: X(d) + 5, y: T - 18 + dy, 'font-size': 12, 'font-weight': 700, fill: col[e] || 'var(--muted)' }, ev).textContent = t;
+  });
+  for (const e of ['1', '2']) {
+    const rows = WK[e];
+    rows.forEach(([d, v, n]) => el('circle', { cx: X(d), cy: Yp(v), r: Math.sqrt(n) / 6, fill: col[e], opacity: 0.22 }, ev));
+    const sm = rows.map((r, i) => { const w = rows.slice(Math.max(0, i - 1), i + 2); return [r[0], w.reduce((s, x) => s + x[1], 0) / w.length]; });
+    const path = el('path', { d: sm.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Yp(p[1]).toFixed(1)).join(' '), fill: 'none', stroke: col[e], 'stroke-width': 3, 'stroke-linejoin': 'round' }, ev);
+    const last = sm[sm.length - 1];
+    el('text', { x: X(last[0]) - 4, y: Yp(last[1]) - 10, 'text-anchor': 'end', 'font-size': 12, 'font-weight': 700, fill: col[e] }, ev).textContent = '설비 ' + e;
+    if (!reduce) { const len = path.getTotalLength(); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; path.getBoundingClientRect(); path.style.transition = 'stroke-dashoffset 2.4s ease-out'; requestAnimationFrame(() => path.style.strokeDashoffset = 0); }
+  }
+  el('text', { x: X('2023-08-10'), y: Yp(13.2) - 10, 'font-size': 12, fill: 'var(--ink)' }, ev).textContent = '8월 같은 달: 보정한 설비 1은 4.7%, 보정 전 설비 2는 12.6%';
+  const F = [['헤드 Y 좌표 보정·감시', 412], ['2시간 대기 인터락', 98], ['챔버 온도 하한 47℃', 40], ['재가동 더미 도포', 34]];
+  document.getElementById('fixbars').innerHTML = F.map(([t, n]) => `<span>${t}</span><div class="track"><b style="width:${n / 412 * 100}%;background:var(--accent)"></b></div><span class="num">약 ${n}건</span>`).join('')
+    + `<span class="total">합계</span><span class="total"></span><span class="num total">약 580건 (25%)</span>`;
+})();
+
+setRecipe(recipe);
+applyPreset('align');
+</script>

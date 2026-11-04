@@ -1,0 +1,11 @@
+{'exp': 'C_v1+v2', 'f1': np.float64(0.2901), 'pr_auc': 0.2905, 'roc_auc': 0.701, 'th': np.float64(0.1846), 'n_feat': 212, 'sec': 53}
+{'exp': 'H_C+static', 'f1': np.float64(0.2885), 'pr_auc': 0.2913, 'roc_auc': 0.7016, 'th': np.float64(0.1663), 'n_feat': 220, 'sec': 49}
+{'exp': 'I_C+nb_realtime', 'f1': np.float64(0.2877), 'pr_auc': 0.2903, 'roc_auc': 0.7008, 'th': np.float64(0.1609), 'n_feat': 216, 'sec': 44}
+{'exp': 'J_C+nb_all', 'f1': np.float64(0.2895), 'pr_auc': 0.2906, 'roc_auc': 0.6979, 'th': np.float64(0.169), 'n_feat': 221, 'sec': 47}
+{'exp': 'K_C+static+nb_all', 'f1': np.float64(0.2903), 'pr_auc': 0.2905, 'roc_auc': 0.6981, 'th': np.float64(0.1945), 'n_feat': 229, 'sec': 53}
+              exp     f1  pr_auc  roc_auc     th  n_feat  sec
+          C_v1+v2 0.2901  0.2905   0.7010 0.1846     212   53
+       H_C+static 0.2885  0.2913   0.7016 0.1663     220   49
+  I_C+nb_realtime 0.2877  0.2903   0.7008 0.1609     216   44
+       J_C+nb_all 0.2895  0.2906   0.6979 0.1690     221   47
+K_C+static+nb_all 0.2903  0.2905   0.6981 0.1945     229   53

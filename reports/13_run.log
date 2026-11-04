@@ -1,0 +1,33 @@
+{'n_full': 40506, 'n_clean': 40374, 'defect_full': np.float64(0.058), 'defect_clean': np.float64(0.055), 'sig_full': 110, 'sig_clean': 101, 'robust_full': 28, 'robust_clean': 18}
+dropped ['Dam__DISCHARGED TIME OF RESIN(Stage2)', 'Dam__Stage2 Circle1 Distance Speed', 'Dam__Stage2 Line1 Distance Speed', 'Dam__Stage2 Line3 Distance Speed', 'Fill1__HEAD NORMAL COORDINATE X AXIS(Stage1)', 'fe_Dam_speed_mean', 'fe_Dam_speed_std', 'fe_Fill2_coord_dev_abs', 'fe_lead_Dam_Fill1', 'fe_lead_total']
+new []
+                                             status  r_full  r_clean  rank_full  rank_clean      OR_full  p_full  OR_clean  p_clean
+feature                                                                                                                            
+dev_Dam__Z(Stage1)                               유지  0.1644   0.1627        1.0         1.0       1.0013  0.9777    0.9821   0.6999
+Fill1__HEAD NORMAL COORDINATE X AXIS(Stage2)     유지  0.1621   0.1603        2.0         2.0       1.0212  0.2933    1.0187   0.3750
+fe_Dam_speed_mean                               사라짐  0.1554   0.1524        3.0         4.0       1.2732  0.0000    1.2784   0.0000
+dev_Fill1__X(Stage2)                             유지  0.1521   0.1507        5.0         5.0       1.0211  0.2941    1.0187   0.3763
+Dam__Stage2 Line2 Distance Speed                 유지  0.1462   0.1442        7.0         6.0       1.2422  0.0000    1.2475   0.0000
+Dam__Stage2 Circle1 Distance Speed              사라짐  0.1458   0.1437        8.0         7.0       1.2406  0.0000    1.2457   0.0000
+Dam__DISCHARGED TIME OF RESIN(Stage2)           사라짐 -0.1466  -0.1434        6.0         8.0       0.7662  0.0000    0.7685   0.0000
+Dam__Stage2 Line1 Distance Speed                사라짐  0.1456   0.1432        9.0         9.0       1.2532  0.0000    1.2574   0.0000
+Dam__Stage2 Line3 Distance Speed                사라짐  0.1448   0.1423       10.0        10.0       1.2458  0.0000    1.2493   0.0000
+dev_Fill1__Y(Stage3)                             유지 -0.1368  -0.1408       11.0        11.0       1.0439  0.0050    0.8949   0.0004
+fe_Fill1_coord_dev_abs                           유지  0.1273   0.1186       15.0        21.0       1.1495  0.0000    1.0344   0.1089
+Fill1__Dispense Volume(Stage2)                   유지  0.1229   0.1180       19.0        22.0       1.0939  0.0000    1.0943   0.0000
+Fill1__DISCHARGED TIME OF RESIN(Stage2)          유지  0.1224   0.1177       20.0        23.0       1.0953  0.0000    1.0963   0.0000
+fe_wo_span_h                                     유지  0.1083   0.1079       39.0        38.0       1.1454  0.0000    1.1400   0.0000
+fe_Fill1_X_s1_s3                                 유지 -0.1013  -0.1009       42.0        41.0       0.9695  0.1352    0.9700   0.1517
+Dam__Head Zero Position Y                        유지  0.0931   0.0921       47.0        49.0       1.1545  0.0000    1.1524   0.0000
+AutoClave__3rd Pressure                          유지  0.0668   0.0620       64.0        67.0       1.0147  0.5341    1.0197   0.4159
+fe_lead_total                                   사라짐  0.1095   0.0572       36.0        73.0       6.2702  0.0000    1.3073   0.0000
+AutoClave__Chamber Temp. Unit Time               유지  0.0554   0.0539       76.5        75.5       0.6033  0.0000    0.6119   0.0000
+fe_AC_time_total                                 유지  0.0554   0.0539       76.5        75.5       0.6033  0.0000    0.6119   0.0000
+Dam__HEAD NORMAL COORDINATE Y AXIS(Stage3)       유지 -0.0559  -0.0507       75.0        80.0     869.4564  0.2787  150.7206   0.4368
+Dam__HEAD NORMAL COORDINATE Y AXIS(Stage1)       유지 -0.0549  -0.0505       79.0        81.0     660.4689  0.2970   98.7827   0.4750
+Fill1__HEAD NORMAL COORDINATE X AXIS(Stage1)    사라짐 -0.0377  -0.0393       89.0        88.0       0.9705  0.1570    0.9687   0.1371
+fe_Dam_coord_dev_abs                             유지  0.0280   0.0333       96.0        94.0       1.2283  0.0000    1.2462   0.0000
+fe_Dam_X_s1_s3                                   유지 -0.0159  -0.0200      110.0       106.0       0.0000  0.0000    0.0000   0.0000
+fe_Dam_speed_std                                사라짐 -0.0171  -0.0140      109.0       109.0       0.9461  0.0190    0.9504   0.0363
+fe_lead_Dam_Fill1                               사라짐  0.0279   0.0127       97.0       112.0       1.3455  0.0000    1.1000   0.0000
+fe_Fill2_coord_dev_abs                          사라짐  0.0108  -0.0043      132.0       139.0  126964.7377  0.2627    1.0211   0.4308
