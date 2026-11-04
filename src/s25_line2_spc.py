@@ -13,8 +13,8 @@ tr = d[d.is_train == 1].copy(); tr['y'] = tr.target.astype(int); tr['day'] = tr.
 rule = (tr.fe_lead_total > 2) | (tr.equip_mismatch == 1) | (tr.fe_Fill1_zero_dispense == 1)
 t = tr[(tr.date_Dam >= '2023-09-01') & ~rule & ~(tr['dev_Dam__Y(Stage2)'] < -0.05)].copy()
 t['small'] = (t.ac_batch <= 3).astype(int); t['fast'] = (t['Dam__Stage2 Line1 Distance Speed'] >= 6500).astype(int)
-t['uv45'] = (t['Fill2__CURE SPEED'] == 45).astype(int); t['m501'] = t.model.str.endswith('501').astype(int)
-COMP = {'Dam 속도 ≥6500': 'fast', 'UV 속도 45': 'uv45', '탈포 배치 1-3': 'small', '주력 모델 A': 'm501',
+t['uv45'] = (t['Fill2__CURE SPEED'] == 45).astype(int); t['main_model'] = t.model.eq(t.model.value_counts().idxmax()).astype(int)
+COMP = {'Dam 속도 ≥6500': 'fast', 'UV 속도 45': 'uv45', '탈포 배치 1-3': 'small', '주력 모델 A': 'main_model',
         'Dam 택트(초)': 'Dam__Machine Tact time', 'Fill1 택트(초)': 'Fill1__Machine Tact time', '챔버 온도': 'AutoClave__Chamber Temp.',
         'Fill1 Stage2 토출량': 'Fill1__Dispense Volume(Stage2)', 'Dam 좌표편차 합': 'fe_Dam_coord_dev_abs', 'Fill1 좌표편차 합': 'fe_Fill1_coord_dev_abs'}
 out = {}; fig, ax = plt.subplots(2, 1, figsize=(15, 7), sharex=True)

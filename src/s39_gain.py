@@ -1,6 +1,6 @@
 """39단계: 원인 해결로 얻는 이득 — 늘어나는 양품 수 · 수율 · 연간 이득(디스플레이 1개 가치 시나리오)
 초과 불량 = 해당 조건의 불량 − 정상 조건의 불량률로 기대되는 불량
-- Seg 노즐 위치: 보정 전 좌표로 만든 제품의 초과 불량 412개(train, 16_actionable) — 9월 보정으로 이미 얻은 이득
+- Stage2 노즐 위치: 보정 전 좌표로 만든 제품의 초과 불량 412개(train, 16_actionable) — 9월 보정으로 이미 얻은 이득
 - 탈포 작은 배치(≤ 3개, 4 ~ 9개) · 챔버 ≤ 46℃: 2023-09 이후 · 알려진 원인 제외 집단, 기준 = 배치 10개 이상 / 챔버 47℃ 이상
 환산: train은 전체 제품의 70% → × (전체 ÷ train), 8개월 → 12개월
 디스플레이 1개 가치(확정 단가 없음): 30만 · 60만 · 120만 원 — 12인치 계기판 모듈 약 410달러 추정치(출처 신뢰도 낮음) 주변으로 설정
@@ -21,7 +21,7 @@ k_year = 12 / t.date_Dam.dt.to_period('M').nunique()
 ref = t[t.ac_batch >= 10].y.mean()
 small = t.ac_batch <= 3; mid = (t.ac_batch >= 4) & (t.ac_batch <= 9); cold = t['AutoClave__Chamber Temp.'] <= 46
 ex = lambda m, r: t.y[m].sum() - m.sum() * r
-CAUSES = [('Seg 구간 노즐 위치 보정', 412 * k_rows, '이미 얻은 이득 (2023년 9월 보정) · 재발 감시로 유지'),
+CAUSES = [('Stage2 구간 노즐 위치 보정', 412 * k_rows, '이미 얻은 이득 (2023년 9월 보정) · 재발 감시로 유지'),
           ('탈포기 1 ~ 3개만 넣고 돌리기 방지', ex(small, ref) * k_rows * k_year, '최소 투입 수량 기준'),
           ('탈포기 4 ~ 9개만 넣고 돌리기 방지', ex(mid, ref) * k_rows * k_year, '배치 채워서 돌리기'),
           ('탈포 챔버 46℃ 이하 방지', ex(cold, t.y[~cold].mean()) * k_rows * k_year, '온도 하한 47℃')]
@@ -55,7 +55,7 @@ a.text(.06, .34, f"노즐 보정으로 이미 얻은 이득 포함 시", fontsiz
 a.text(.06, .24, f"양품 +{out['total']['extra_good_units']:,}개 · {won(tot_mid)}", fontsize=12, color=DARK, transform=a.transAxes)
 a.text(.06, .08, '디스플레이 1개 60만 원 가정', fontsize=10, color='#666', transform=a.transAxes)
 # ② 원인별 양품
-b = fig.add_subplot(gs[1]); SHORT = ['Seg 노즐 위치 보정', '탈포기 1~3개 방지', '탈포기 4~9개 방지', '챔버 46℃ 이하 방지']; names = SHORT; n = [c['extra_good_units'] for c in C]; cols = [TEAL, RED, '#e07b6e', '#e3a857']
+b = fig.add_subplot(gs[1]); SHORT = ['Stage2 노즐 위치 보정', '탈포기 1~3개 방지', '탈포기 4~9개 방지', '챔버 46℃ 이하 방지']; names = SHORT; n = [c['extra_good_units'] for c in C]; cols = [TEAL, RED, '#e07b6e', '#e3a857']
 b.barh(names[::-1], n[::-1], color=cols[::-1], height=.55)
 for i, c in enumerate(C[::-1]): b.text(c['extra_good_units'] + 8, i, f"+{c['extra_good_units']:,}개 · {won(c['gain_100m_won'][MID])}", va='center', fontsize=10.5, weight='bold', color=DARK)
 b.set_xlim(0, max(n) * 1.75); b.set_xlabel('1년에 늘어나는 양품 (개)'); b.tick_params(axis='y', labelsize=10.5)
@@ -63,7 +63,7 @@ b.set_title('원인별로 늘어나는 양품과 이득', fontsize=12.5, weight=
 # ③ 단가 시나리오
 c3 = fig.add_subplot(gs[2]); x = np.arange(3)
 done = [C[0]['gain_100m_won'][str(p)] for p in PRICES]; more = [out['future_only']['gain_100m_won'][str(p)] for p in PRICES]
-c3.bar(x, done, .6, color=TEAL, label='이미 얻은 이득 (Seg 노즐 보정)'); c3.bar(x, more, .6, bottom=done, color=RED, label='앞으로 얻을 이득')
+c3.bar(x, done, .6, color=TEAL, label='이미 얻은 이득 (Stage2 노즐 보정)'); c3.bar(x, more, .6, bottom=done, color=RED, label='앞으로 얻을 이득')
 for i in range(3): c3.text(i, done[i] + more[i] + .25, won(done[i] + more[i]), ha='center', fontsize=11, weight='bold', color=RED if i == 1 else DARK)
 c3.set_xticks(x); c3.set_xticklabels([f'{p}만 원' for p in PRICES]); c3.set_xlabel('디스플레이 1개 가치 (가정)'); c3.set_ylabel('연간 이득 (억 원)')
 c3.set_ylim(0, (done[-1] + more[-1]) * 1.25); c3.legend(fontsize=9, frameon=False, loc='upper left')

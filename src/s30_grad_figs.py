@@ -128,7 +128,7 @@ s = pd.Series(ps).rename(ren).sort_values()
 fig, ax = plt.subplots(figsize=(7.5, 3.6)); ax.barh(s.index, s.values, color=[RED if v == s.max() else BLUE for v in s.values], height=.6)
 for i, v in enumerate(s.values): ax.text(v + .5, i, f'{v:.1f}%', va='center', fontsize=9)
 ax.set_xlabel('모델 판단에 기여한 몫 (%)'); ax.set_xlim(0, 42); ax.set_title('모델은 어느 공정을 보고 불량을 판단했나 (SHAP)', fontsize=11.5, weight='bold', loc='left'); save('grad_B5_shap')
-# ── A6: 구간별 — 가장 얇은 가벽(Seg)이 가장 약하다 (전체 기간, 규칙 제외)
+# ── A6: 구간별 — 토출량이 가장 적은 Stage2 구간이 가장 약하다 (전체 기간, 규칙 제외)
 u = tr[~rule]; REG = [(1, 'Stage1'), (2, 'Stage2'), (3, 'Stage3')]
 vol = [u[f'Dam__Dispense Volume(Stage{s})'].median() for s, _ in REG]
 r_bad = [u.y[u[f'dev_Dam__Y(Stage{s})'] < -0.05].mean() * 100 for s, _ in REG]; r_ok = [u.y[u[f'dev_Dam__Y(Stage{s})'] >= -0.05].mean() * 100 for s, _ in REG]

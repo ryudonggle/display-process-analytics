@@ -16,7 +16,7 @@ lead = (pd.to_datetime(raw['Collect Date_AutoClave']) - pd.to_datetime(raw['Coll
 rule = mis | (lead > 2)
 V['rule_recheck'] = dict(mismatch=[int(mis.sum()), round(yb[mis].mean() * 100, 1)], long_wait=[int((lead > 2).sum()), round(yb[lead > 2].mean() * 100, 1)],
                          union=[int(rule.sum()), int(yb[rule].sum())])
-V['model_C'] = round(yb[raw['Model.Suffix_Dam'].str.endswith('503')].mean() * 100, 2)
+V['model_C'] = round(yb[raw['Model.Suffix_Dam'].eq(sorted(raw['Model.Suffix_Dam'].dropna().unique())[2])].mean() * 100, 2)
 
 # 2) OOF 상위 k% 재검사 시 포착률
 O = pd.read_parquet('data/oof.parquet')

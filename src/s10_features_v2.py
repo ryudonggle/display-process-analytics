@@ -51,7 +51,7 @@ add('v2_coord_dev_total', d[[c for c in d.columns if c.startswith('dev_')]].abs(
 add('v2_dam_speed_hi', (d.fe_Dam_speed_mean > 6000).astype(int), 'Dam 이동속도 > 6000')
 add('v2_dam_s2_short', (d['Dam__DISCHARGED TIME OF RESIN(Stage2)'] < 6).astype(int), 'Dam Stage2 토출 < 6초')
 add('v2_ac_temp_low', (d['AutoClave__Chamber Temp.'] <= 46).astype(int), '챔버 온도 ≤ 46℃')
-add('v2_model_C', d.model.str.endswith('503').astype(int), '모델 C')
+add('v2_model_C', d.model.eq(sorted(d.model.dropna().unique())[2]).astype(int), '모델 C')
 add('v2_pxx_order', d.workorder.str.contains('PXX').astype(int), '시험 생산 작업지시')
 
 # ── 6) 로트 내 이상: 작업지시 중앙값 대비 편차 ──
