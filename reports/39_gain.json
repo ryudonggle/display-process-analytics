@@ -9,7 +9,7 @@
  ],
  "causes": [
   {
-   "cause": "Seg 구간 노즐 위치 보정",
+   "cause": "Stage2 구간 노즐 위치 보정",
    "extra_good_units": 589,
    "yield_gain_pp": 1.02,
    "how": "이미 얻은 이득 (2023년 9월 보정) · 재발 감시로 유지",
