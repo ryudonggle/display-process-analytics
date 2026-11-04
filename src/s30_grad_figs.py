@@ -138,6 +138,6 @@ ax[0].set_title('Stage2 구간은 가벽 레진이 절반뿐', fontsize=10.5, lo
 x = np.arange(3); ax[1].bar(x - .2, r_ok, .38, color='#cfd8e6', label='좌표 정상'); ax[1].bar(x + .2, r_bad, .38, color=[BLUE, RED, BLUE], label='좌표 Y가 기준보다 어긋남')
 for i in range(3): ax[1].text(i - .2, r_ok[i] + .2, f'{r_ok[i]:.1f}%', ha='center', fontsize=9); ax[1].text(i + .2, r_bad[i] + .2, f'{r_bad[i]:.1f}%', ha='center', fontsize=9)
 ax[1].set_xticks(x); ax[1].set_xticklabels(lab); ax[1].set_ylabel('불량률 (%)'); ax[1].set_ylim(0, 11); ax[1].legend(fontsize=8.5, frameon=False)
-ax[1].set_title('같은 좌표 오차도 Seg에서만 불량으로 이어진다', fontsize=10.5, loc='left')
+ax[1].set_title('같은 좌표 오차도 Stage2에서만 불량으로 이어진다', fontsize=10.5, loc='left')
 fig.text(.5, -.04, '→ 가장 얇은 가벽이 가장 약하다', ha='center', fontsize=10.5, color=DARK, weight='bold'); save('grad_A6_seg')
 print('figs done')
