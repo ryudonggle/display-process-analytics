@@ -1,0 +1,28 @@
+# 대회 데이터 · 중간 산출물 (재배포 금지, data/README.md 참고)
+data/*
+!data/README.md
+reports/submission.csv
+# 환경 · 캐시
+.venv/
+__pycache__/
+catboost_info/
+*.pyc
+# 생성물 (src/make_fonts.py로 다시 만듦)
+fonts/
+# 대용량 시각화 산출물
+showcase/
+README_미리보기.pdf
+# 예전 판 PDF (대표 보고서만 올림: reports/프로젝트_불량예측과원인규명.pdf)
+reports/lg5_불량원인분석_보고서.pdf
+reports/lg5_9월이후_인사이트_보고서.pdf
+reports/졸작_A_원인진단_보고서.pdf
+reports/졸작_B_예측모델_보고서.pdf
+# 내부 작업 문서 · 옛 판 그림 (최종판: figs/final_*.png)
+reports/grad_A_원인진단.md
+reports/grad_B_예측모델.md
+reports/26_story_outline.md
+figs/grad_A1_alignment.png
+figs/grad_A3_batch.png
+figs/grad_A6_seg.png
+figs/grad_process.png
+figs/proj_gain.png
